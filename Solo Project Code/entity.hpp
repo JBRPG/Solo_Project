@@ -20,6 +20,8 @@ private:
 	float speed;
 	sf::Time spawntime;
 	bool invincible;
+	//int entityID; // Needed? removing entities might be more suitable during collision
+	              // inside collision grid
 
 
 
@@ -31,11 +33,11 @@ public:
 	*/
 
 	Entity(const sf::Texture& tex) :Sprite(tex),
-		health{ 0 }, speed{ 0 }, invincible{ true }
+		health{ 1 }, speed{ 0 }, invincible{ true }
 	{};
 	Entity(const sf::Texture& tex, const sf::IntRect& rect) :
 		Sprite(tex, rect),
-		health{ 0 }, speed{ 0 }, invincible{ true }
+		health{ 1 }, speed{ 0 }, invincible{ true }
 	{};
 
 	/*

@@ -15,7 +15,7 @@ private:
 	sf::View  hudView;
 
 public:
-	SceneGame(Game& game);
+	SceneGame(Game* game);
 
 	virtual void draw(sf::Time dt);
 	virtual void update(sf::Time dt);

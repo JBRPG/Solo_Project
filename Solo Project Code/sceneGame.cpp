@@ -1,12 +1,11 @@
 #include "sceneGame.hpp"
 
-SceneGame::SceneGame(Game& game){
+SceneGame::SceneGame(Game* game){
 
-	this->game = game;
 
 	// Set up the view layers
 
-	sf::Vector2f pos = sf::Vector2f(this->game.window.getSize());
+	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
 	this->background1View.setSize(pos);
 	this->background2View.setSize(pos);
 	this->gameView.setSize(pos);
