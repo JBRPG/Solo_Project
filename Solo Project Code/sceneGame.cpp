@@ -2,6 +2,7 @@
 
 SceneGame::SceneGame(Game* game){
 
+	this->game = game; // need this to run the game.
 
 	// Set up the view layers
 
@@ -18,15 +19,26 @@ SceneGame::SceneGame(Game* game){
 	this->playerView.setCenter(pos);
 	this->hudView.setCenter(pos);
 
+	// Initialize the background
+
+	background = sf::Sprite(this->game->texmgr.getRef("background"));
+
+	// Initialize the entities
+
 	// We will fill in other things later
 }
 
-void SceneGame::draw(sf::Time dt){
+void SceneGame::draw(float dt){
+
+	// draw the background
+	this->game->window.setView(background1View);
+	this->game->window.draw(background);
+
 	// draw the entities
 
 }
 
-void SceneGame::update(sf::Time){
+void SceneGame::update(float dt){
 	///update the entities
 
 }

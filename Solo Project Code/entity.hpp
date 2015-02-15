@@ -54,8 +54,7 @@ public:
 
 	// Member functions
 
-	void update(sf::Time dt);
-	void draw(sf::Time dt);
+
 
 	void setHealth(int hp) { this -> health = hp; };
 	int getHealth() { return health; };

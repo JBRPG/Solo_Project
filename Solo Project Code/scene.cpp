@@ -12,3 +12,10 @@ void Scene::removeEntity(Entity* Entity){
 	*/
 
 }
+
+void Scene::cleanEntityList(){
+	
+	// erase all the entities inside the vector
+
+
+}

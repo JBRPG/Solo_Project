@@ -6,26 +6,34 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "textureManager.hpp"
+
+class Scene; // forward declare
 
 class Game{
 
 private:
-	sf::Vector2i gameDisplay{800, 600};
-	int          gameFrameLimit{ 60 };
-
+	
 public:
 
-	sf::RenderWindow window;
+	std::stack<Scene*> scenes;
 
-	//void pushState();
-	//void popState();
-	// void changeState();
-	// State* peekstate();
+	sf::RenderWindow window;
+	TextureManager texmgr;
+
+	void pushScene(Scene* scene);
+	void popScene();
+	void changeScene(Scene* scene);
+	Scene* peekScene();
 
 	void gameLoop();
 
-	sf::Vector2i getDisplay() { return gameDisplay; };
-	int getFrameLimit()       { return gameFrameLimit; };
+	void loadTextures();
+
+	std::vector<std::string> split(const std::string &line, std::string delim,
+		std::vector<std::string> &elems);
+
+	std::vector<std::string> split(const std::string &line, std::string delim);
 
 	Game();
 	~Game();

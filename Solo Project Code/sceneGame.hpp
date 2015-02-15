@@ -14,10 +14,13 @@ private:
 	sf::View  playerView;
 	sf::View  hudView;
 
+	// for temporary purpose, we will have a background sprite
+	sf::Sprite background;
+
 public:
 	SceneGame(Game* game);
 
-	virtual void draw(sf::Time dt);
-	virtual void update(sf::Time dt);
+	virtual void draw(float dt);
+	virtual void update(float dt);
 
 };

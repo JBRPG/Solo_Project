@@ -20,11 +20,12 @@ public:
 	Game* game;
 
 
-	virtual void draw(sf::Time dt) = 0;
-	virtual void update(sf::Time dt) = 0;
+	virtual void draw(float dt) = 0;
+	virtual void update(float dt) = 0;
 
 	virtual void addEntity(Entity*);
 	virtual void removeEntity(Entity*);
+	virtual void cleanEntityList();
 
 
 };
