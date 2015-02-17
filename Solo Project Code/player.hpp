@@ -3,6 +3,7 @@
 #include <SFML\Graphics.hpp>
 
 #include "entity.hpp"
+#include "input.hpp"
 
 class Player : public Entity{
 
@@ -13,21 +14,38 @@ private:
 	unsigned int lives;
 	// Powerups ?
 	// Weapons ?
+	
+	int hp;
+	float speed;
+	bool invincibility;
+
 
 
 public:
 
 	Player(const sf::Texture& tex, int hp, float speed, bool invincibility,
-		int lives) : Entity(tex, hp, speed, invincibility)
+		int lives) :
+		hp{ hp },
+		speed{ speed },
+		invincibility{ invincibility },
+
+		Entity(tex, hp, speed, invincibility)
 	{};
 
 
 	Player(const sf::Texture& tex, const sf::IntRect& rect, int hp,
 		  float speed, bool invincibility,
-		int lives) : Entity(tex, rect, hp, speed, invincibility)
+		int lives) :
+		hp{ hp },
+		speed{ speed },
+		invincibility{ invincibility },
+
+		Entity(tex, rect, hp, speed, invincibility)
 	{};
 
-	void move();
-	void shoot();
+	void update(float dt);
+
+	void movePlayer();
+	void shootPlayer();
 
 };

@@ -19,3 +19,11 @@ void Scene::cleanEntityList(){
 
 
 }
+
+int Scene::getEntitysize(){
+	return EntityList.size();
+}
+
+Entity* Scene::getEntity(int idx){
+	return EntityList[idx];
+}

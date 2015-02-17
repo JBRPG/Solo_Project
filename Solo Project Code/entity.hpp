@@ -54,7 +54,7 @@ public:
 
 	// Member functions
 
-
+	virtual void update(float dt);
 
 	void setHealth(int hp) { this -> health = hp; };
 	int getHealth() { return health; };

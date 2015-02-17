@@ -26,6 +26,8 @@ public:
 	virtual void addEntity(Entity*);
 	virtual void removeEntity(Entity*);
 	virtual void cleanEntityList();
+	virtual int  getEntitysize();
+	virtual Entity* getEntity(int);
 
 
 };

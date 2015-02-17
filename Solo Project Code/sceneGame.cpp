@@ -1,4 +1,6 @@
 #include "sceneGame.hpp"
+#include "input.hpp"
+
 
 SceneGame::SceneGame(Game* game){
 
@@ -25,6 +27,15 @@ SceneGame::SceneGame(Game* game){
 
 	// Initialize the entities
 
+	// for now we just add in the player and a few others
+	// hardcoded until we make use of the random generator
+
+	player = new Player(this->game->texmgr.getRef("playerSprite"),
+		1, 5, false, 3);
+	player->setPosition(sf::Vector2f(100, 300));
+
+	addEntity(player);
+
 	// We will fill in other things later
 }
 
@@ -35,10 +46,23 @@ void SceneGame::draw(float dt){
 	this->game->window.draw(background);
 
 	// draw the entities
+	
+	//*
+
+	// let's test this out for now....
+
+	for (int i = 0; i < getEntitysize(); ++i){
+		sf::Sprite* idxSprite = getEntity(i);
+		this->game->window.draw(*idxSprite);
+	}
+	//*/
 
 }
 
 void SceneGame::update(float dt){
 	///update the entities
-
+	for (int i = 0; i < getEntitysize(); ++i){
+		Entity* idxEntity = getEntity(i);
+		idxEntity->update(dt);
+	}
 }

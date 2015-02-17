@@ -4,6 +4,9 @@
 
 #include "scene.hpp"
 #include "game.hpp"
+#include "entity.hpp"
+#include "enemy.hpp"
+#include "player.hpp"
 
 class SceneGame : public Scene{
 private:
@@ -16,6 +19,7 @@ private:
 
 	// for temporary purpose, we will have a background sprite
 	sf::Sprite background;
+	Player* player;
 
 public:
 	SceneGame(Game* game);
