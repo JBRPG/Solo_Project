@@ -55,6 +55,7 @@ public:
 	// Member functions
 
 	virtual void update(float dt);
+	virtual void collideWith(Entity*);
 
 	void setHealth(int hp) { this -> health = hp; };
 	int getHealth() { return health; };

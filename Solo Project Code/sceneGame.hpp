@@ -7,6 +7,7 @@
 #include "entity.hpp"
 #include "enemy.hpp"
 #include "player.hpp"
+#include "collisionGrid.hpp"
 
 class SceneGame : public Scene{
 private:
@@ -21,10 +22,18 @@ private:
 	sf::Sprite background;
 	Player* player;
 
+	// Other important variables
+	collisionGrid gridBox;
+
+
 public:
 	SceneGame(Game* game);
 
+	// Scene functions
 	virtual void draw(float dt);
 	virtual void update(float dt);
+
+	void populateGrid();
+	void checkCollisions();
 
 };

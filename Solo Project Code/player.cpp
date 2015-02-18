@@ -6,6 +6,19 @@ void Player::update(float dt){
 
 }
 
+void Player::collideWith(Enemy* enemy){
+	// Destroy the player upon collision
+	// unless invincible, destroy the enemy
+}
+
+void Player::collideWith(Bullet* bullet){
+	if (!bullet->getEnemyShot()) return;
+
+	// Take damage from bullet,
+	// or destroy player if no zero or less hp left
+
+}
+
 
 /*
   For barebones purposes,
@@ -41,7 +54,14 @@ void Player::movePlayer(){
 	this->move(velocity);
 }
 
-// We will create a bullet entity from the player later
+/*
+   Since the player has to make bullets, then we need to add the bullets
+   to the entity list
+*/
+
+// We will create a bullet entity from the player
+// Will have delay period between each shot
+
 void Player::shootPlayer(){
 
 

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "entity.hpp"
+#include "player.hpp"
+#include "bullet.hpp"
+#include "terrain.hpp"
 
 class Enemy : public Entity{
 
@@ -35,5 +38,13 @@ public:
 
 	void setGroupID(int id) { this->groupID = id; };
 	int getGroupID() { return this->groupID; };
+
+
+	void collideWith(Player*);
+	void collideWith(Bullet*);
+	void collideWith(Terrain*);
+
+	void shootEnemy(); // Will fire after set time period for now..
+
 
 };

@@ -3,6 +3,9 @@
 #include <SFML\Graphics.hpp>
 
 #include "entity.hpp"
+#include "bullet.hpp"
+#include "enemy.hpp"
+
 #include "input.hpp"
 
 class Player : public Entity{
@@ -15,6 +18,7 @@ private:
 	// Powerups ?
 	// Weapons ?
 	
+	// From entity
 	int hp;
 	float speed;
 	bool invincibility;
@@ -44,6 +48,10 @@ public:
 	{};
 
 	void update(float dt);
+
+
+	void collideWith(Bullet*);
+	void collideWith(Enemy*);
 
 	void movePlayer();
 	void shootPlayer();
