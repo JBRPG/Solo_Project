@@ -1,6 +1,6 @@
 #include "scene.hpp"
 
-void Scene::addEntity(Entity* entity){
+void Scene::addEntity(Entity* entity){;
 	EntityList.push_back(entity);
 }
 
@@ -25,5 +25,5 @@ int Scene::getEntitysize(){
 }
 
 Entity* Scene::getEntity(int idx){
-	return EntityList[idx];
+	return EntityList.at(idx);
 }

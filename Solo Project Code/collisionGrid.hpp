@@ -36,6 +36,7 @@ public:
 	struct Cell{
 		Entity* items[maxEntities];
 		int nEntities;
+		//bool checked[maxEntities];
 	};
 
 	Cell cell[slicesX][slicesY];

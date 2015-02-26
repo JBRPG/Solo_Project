@@ -1,9 +1,12 @@
 #pragma once
 
 #include "entity.hpp"
-#include "player.hpp"
+//#include "player.hpp"
 #include "bullet.hpp"
 #include "terrain.hpp"
+
+// Forward declarations
+class Player;
 
 class Enemy : public Entity{
 

@@ -1,8 +1,10 @@
 #include "player.hpp"
 
+
+
 void Player::update(float dt){
 	this->movePlayer();
-	this->shootPlayer();
+	this->shootPlayer(dt);
 
 }
 
@@ -62,7 +64,36 @@ void Player::movePlayer(){
 // We will create a bullet entity from the player
 // Will have delay period between each shot
 
-void Player::shootPlayer(){
+
+void Player::shootPlayer(float dt){
+
+	// we reduce time for shoot delay
+
+	shootDelay -= dt;
+
+	if (shootDelay > 0.0f) return;
+
+	
+
+	if (Input::instance()->pressKeybutton(sf::Keyboard::Space)){
+
+		
 
 
+		///*
+
+		Bullet* bullet_p = new Bullet(myScene->game->texmgr.getRef("bulletPlayer"),
+			1, 10, false, false, 0.0f);
+
+
+		bullet_p->setPosition(this->getPosition().x + this->getLocalBounds().width/2,
+			this->getPosition().y);
+		myScene->storeAddedEntity(bullet_p);
+
+		resetDelay();
+
+		//*/
+
+
+	}
 }

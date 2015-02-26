@@ -13,7 +13,11 @@ class Game; // forward declare
 class Scene{
 private:
 
+	
+protected:
+
 	std::vector<Entity*> EntityList;
+
 
 public:
 

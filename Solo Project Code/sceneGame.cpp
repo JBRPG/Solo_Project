@@ -36,6 +36,21 @@ SceneGame::SceneGame(Game* game){
 
 	addEntity(player);
 
+
+
+
+	/*
+	// Let's add a bullet for test pruposes
+	
+
+	Bullet* bullet_p = new Bullet(this->game->texmgr.getRef("bulletPlayer"),
+		1, 5, false, false, 0.0f);
+
+	bullet_p->setPosition(200, 200);
+	addEntity(bullet_p);
+
+	//*/
+
 	// We will fill in other things later
 }
 
@@ -51,6 +66,8 @@ void SceneGame::draw(float dt){
 
 	// let's test this out for now....
 
+	this->game->window.setView(gameView);
+
 	for (int i = 0; i < getEntitysize(); ++i){
 		sf::Sprite* idxSprite = getEntity(i);
 		this->game->window.draw(*idxSprite);
@@ -60,11 +77,67 @@ void SceneGame::draw(float dt){
 }
 
 void SceneGame::update(float dt){
-	///update the entities
+
+	// make sure to have the lists empty before
+	addList.clear();
+	removeList.clear();
+
+	///update the entities inside the current EntityList
 	for (int i = 0; i < getEntitysize(); ++i){
 		Entity* idxEntity = getEntity(i);
 		idxEntity->update(dt);
 	}
+
+	// Add the created entities
+
+	for (auto entity : addList){
+		addEntity(entity);
+	}
+
+	// Now check collisions
+
+	checkCollisions();
+
+	
+	// if there are no entities to erase, update is complete
+	if (removeList.empty()) return;
+
+	// remove the destroyed entities
+	// must iterate backwards for both vector-based entity lists
+
+	// perhaps the error is caused by the use of iterators
+	// if I get a negative value then the iterator can no longer be decrementable
+	// and thus making itor invalid
+
+	for (auto itor = removeList.end()-1; itor >= removeList.begin(); --itor){
+		// check the entities one by one
+		for (auto etor = EntityList.end() - 1; etor >= EntityList.begin(); --etor){
+			
+			// remove from entity list if searched entity is found
+
+			// Since iterators act as pointers, they can be dereferenced to
+			// access the current element being searched
+			// to make sure they point to the same Entity
+
+			auto p = *itor; // pointer to entities in removeList
+			auto q = *etor; // pointer to entities in EntityList
+
+
+			// This area is giving me a game crash
+			// because I may have done something improper with 
+			if (p == q){
+				// remove entity from entityList
+				EntityList.erase(etor);
+
+
+				break;
+			}
+
+		}
+
+	}
+
+
 }
 
 /*
@@ -90,32 +163,55 @@ void SceneGame::populateGrid(){
 		(sf::Vector2f(0,0),sf::Vector2f(
 				game->window.getSize().x/gridBox.slicesX,
 				game->window.getSize().y/gridBox.slicesY));
+	sf::FloatRect windowRect = sf::FloatRect(0, 0,
+		game->window.getSize().x, game->window.getSize().y);
+    // Now we check each entity if they are inside the grid
 
-    // Now we check each 
+	for (int i = 0; i < getEntitysize(); ++i){
 
-	for (int i = 0; i <= getEntitysize(); ++i){
+		// if entity is outside the game window,
+		// store the entity and continue with the rest of the entities
+
+		if (!getEntity(i)->getGlobalBounds().intersects(windowRect)){
+			storeRemovedEntity(getEntity(i));
+			continue;
+	    }
+
+
+
 		for (auto x = 0; x < gridBox.slicesX; ++x){
 			for (auto y = 0; y < gridBox.slicesY; ++y){
 
 				// Set up the 4 corners for the cell's area
-				cellRect.left = game->window.getSize().x * (x / gridBox.slicesX);
-				cellRect.top = game->window.getSize().y * (y / gridBox.slicesY);
-				cellRect.width = game->window.getSize().x * (x+1 / gridBox.slicesX);
-				cellRect.height = game->window.getSize().y * (y+1 / gridBox.slicesY);
+
+				// had to do float casting for more precise cells
+				cellRect.left = float(game->window.getSize().x) *
+					            (float(x) / float(gridBox.slicesX));
+				cellRect.top = float(game->window.getSize().y) *
+					            (float(y) / float(gridBox.slicesY));
+				cellRect.width = float(game->window.getSize().x) *
+					            (float(x+1) / float(gridBox.slicesX));
+				cellRect.height = float(game->window.getSize().y) *
+					            (float(y+1) / float(gridBox.slicesY));
 
 
 				// Add the entitiy to the cell if they touch
+
 				if (getEntity(i)->getGlobalBounds().intersects(cellRect)){
 					gridBox.append(x, y, getEntity(i));
 				}
 
+
 			}
 		}
+
 
 	}
 }
 
 void SceneGame::checkCollisions(){
+
+	populateGrid();
 
 	for (auto i = 0; i < gridBox.slicesX; ++i){
 		for (auto j = 0; j < gridBox.slicesY; ++j){
@@ -123,6 +219,16 @@ void SceneGame::checkCollisions(){
 
 			for (auto k = 0; k < gridBox.cell[i][j].nEntities; ++k){
 				for (auto l = 0; l < gridBox.cell[i][j].nEntities; ++l){
+
+					// Check if the two items are already checked
+					// go to next set if the two same items are already checked
+					
+					/*
+
+					if (gridBox.cell[i][j].checked[k] &&
+						gridBox.cell[i][j].checked[l]) continue;
+
+				    */
 
 					// Set up the pointers and compare them
 					auto p = gridBox.cell[i][j].items[k];
@@ -133,6 +239,7 @@ void SceneGame::checkCollisions(){
 						intersects(q->getGlobalBounds() )){
 
 						// Do a series of collisions depending on the sub-type of entity
+						p->collideWith(q);
 
 					}
 
@@ -142,5 +249,14 @@ void SceneGame::checkCollisions(){
 		}
 	}
 
+}
+
+/*
+   Functions derived from Scene
+*/
+
+void SceneGame::addEntity(Entity* entity){
+	entity->setScene(this);
+	EntityList.push_back(entity);
 }
 

@@ -2,6 +2,8 @@
 
 #include <SFML\Graphics.hpp>
 
+//#include "sceneGame.hpp"
+
 /*
    Entity inherits all public and protected data and functions from
    Sprite class. Sprite inherits from both Drawable and Transformable.
@@ -10,6 +12,9 @@
    it takes only one inheritence from Sprite to reduce coding burdens.
    
 */
+
+// forward declare
+class SceneGame;
 
 
 class Entity : public sf::Sprite{
@@ -20,8 +25,13 @@ private:
 	float speed;
 	sf::Time spawntime;
 	bool invincible;
-	//int entityID; // Needed? removing entities might be more suitable during collision
-	              // inside collision grid
+
+
+protected:
+
+	SceneGame *myScene; // let's keep it at null
+	                       // since setScene will take care of it
+
 
 
 
@@ -34,11 +44,15 @@ public:
 
 	Entity(const sf::Texture& tex) :Sprite(tex),
 		health{ 1 }, speed{ 0 }, invincible{ true }
-	{};
+	{
+		setOrigin(this->getLocalBounds().width/2, this->getLocalBounds().height/2);
+	};
 	Entity(const sf::Texture& tex, const sf::IntRect& rect) :
 		Sprite(tex, rect),
 		health{ 1 }, speed{ 0 }, invincible{ true }
-	{};
+	{
+		setOrigin(this->getLocalBounds().width / 2, this->getLocalBounds().height / 2);
+	};
 
 	/*
 	   Then we make constructors that have their own parameters
@@ -46,16 +60,23 @@ public:
 	*/
 	Entity(const sf::Texture& tex, int hp, float speed, bool invincible) :
 		Sprite(tex)
-	{};
+	{
+		setOrigin(this->getLocalBounds().width / 2, this->getLocalBounds().height / 2);
+	};
 	Entity(const sf::Texture& tex, const sf::IntRect& rect,
 		int hp, float speed, bool invincible) :
 		Sprite(tex, rect)
-	{};
+	{
+		setOrigin(this->getLocalBounds().width / 2, this->getLocalBounds().height / 2);
+	};
 
 	// Member functions
 
 	virtual void update(float dt);
+
+	// Base functions for subclasses
 	virtual void collideWith(Entity*);
+   //	virtual void spawnEntity(Entity*); // unknown if useable
 
 	void setHealth(int hp) { this -> health = hp; };
 	int getHealth() { return health; };
@@ -63,6 +84,9 @@ public:
 	float getSpeed() { return speed; };
 	void setInvincibility(bool invincible) { this->invincible = invincible; };
 	bool getInvincibility() { return invincible; };
+
+	void setScene(SceneGame *scene){myScene = scene;};
+    SceneGame* getScene(){return myScene;};
 
 
 

@@ -5,9 +5,11 @@
 #include "scene.hpp"
 #include "game.hpp"
 #include "entity.hpp"
-#include "enemy.hpp"
 #include "player.hpp"
 #include "collisionGrid.hpp"
+
+// Test includes
+#include "bullet.hpp"
 
 class SceneGame : public Scene{
 private:
@@ -24,10 +26,13 @@ private:
 
 	// Other important variables
 	collisionGrid gridBox;
+	std::vector<Entity*> addList; // We simply add the created entities to EntityList
+	std::vector<Entity*> removeList; // we match the stored entities for removal
 
 
 public:
 	SceneGame(Game* game);
+	SceneGame() {}; // dummy constructor to get rid of compiler errors
 
 	// Scene functions
 	virtual void draw(float dt);
@@ -35,5 +40,15 @@ public:
 
 	void populateGrid();
 	void checkCollisions();
+
+	void storeAddedEntity(Entity* entity){
+		addList.push_back(entity);
+	}
+	void storeRemovedEntity(Entity* entity){
+		removeList.push_back(entity);
+	}
+
+	// From scene
+	void addEntity(Entity* entity);
 
 };

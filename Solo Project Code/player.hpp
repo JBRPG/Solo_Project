@@ -5,8 +5,13 @@
 #include "entity.hpp"
 #include "bullet.hpp"
 #include "enemy.hpp"
+#include "terrain.hpp"
 
 #include "input.hpp"
+#include "sceneGame.hpp"
+
+// forward declaration
+//class SceneGame;
 
 class Player : public Entity{
 
@@ -17,11 +22,19 @@ private:
 	unsigned int lives;
 	// Powerups ?
 	// Weapons ?
+
+	float delaySet = 0.10f;
+	float shootDelay = delaySet;
+	float prevTime = 0.0f;
+
+
 	
 	// From entity
 	int hp;
 	float speed;
 	bool invincibility;
+
+	// other classes
 
 
 
@@ -32,6 +45,8 @@ public:
 		hp{ hp },
 		speed{ speed },
 		invincibility{ invincibility },
+
+
 
 		Entity(tex, hp, speed, invincibility)
 	{};
@@ -54,6 +69,8 @@ public:
 	void collideWith(Enemy*);
 
 	void movePlayer();
-	void shootPlayer();
+	void shootPlayer(float dt);
+
+	void resetDelay() { shootDelay = delaySet; };
 
 };

@@ -3,9 +3,14 @@
 #include <SFML\Graphics.hpp>
 
 #include "entity.hpp"
-#include "player.hpp"
-#include "bullet.hpp"
-#include "enemy.hpp"
+//#include "player.hpp"
+//#include "bullet.hpp"
+//#include "enemy.hpp"
+
+// forward declare
+class Player;
+class Enemy;
+class Bullet;
 
 
 class Terrain : public Entity{
