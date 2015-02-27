@@ -78,10 +78,6 @@ void SceneGame::draw(float dt){
 
 void SceneGame::update(float dt){
 
-	// make sure to have the lists empty before
-	addList.clear();
-	removeList.clear();
-
 	///update the entities inside the current EntityList
 	for (int i = 0; i < getEntitysize(); ++i){
 		Entity* idxEntity = getEntity(i);
@@ -100,42 +96,50 @@ void SceneGame::update(float dt){
 
 	
 	// if there are no entities to erase, update is complete
-	if (removeList.empty()) return;
+	if (!removeList.empty()){
 
-	// remove the destroyed entities
-	// must iterate backwards for both vector-based entity lists
+		// remove the destroyed entities
+		// must iterate backwards for both vector-based entity lists
 
-	// perhaps the error is caused by the use of iterators
-	// if I get a negative value then the iterator can no longer be decrementable
-	// and thus making itor invalid
+		// perhaps the error is caused by the use of iterators
+		// if I get a negative value then the iterator can no longer be decrementable
+		// and thus making itor invalid
 
-	for (auto itor = removeList.end()-1; itor >= removeList.begin(); --itor){
-		// check the entities one by one
-		for (auto etor = EntityList.end() - 1; etor >= EntityList.begin(); --etor){
-			
-			// remove from entity list if searched entity is found
+		for (int j = removeList.size() - 1; j >= 0; --j){
+			// check the entities one by one
+			for (int k = EntityList.size() - 1; k >= 0; --k){
 
-			// Since iterators act as pointers, they can be dereferenced to
-			// access the current element being searched
-			// to make sure they point to the same Entity
+				// remove from entity list if searched entity is found
 
-			auto p = *itor; // pointer to entities in removeList
-			auto q = *etor; // pointer to entities in EntityList
+				// Since iterators act as pointers, they can be dereferenced to
+				// access the current element being searched
+				// to make sure they point to the same Entity
 
-
-			// This area is giving me a game crash
-			// because I may have done something improper with 
-			if (p == q){
-				// remove entity from entityList
-				EntityList.erase(etor);
+				Entity* p = removeList[j]; // pointer to entities in removeList
+				Entity* q = EntityList[k]; // pointer to entities in EntityList
 
 
-				break;
+				// This area is giving me a game crash
+				// because I may have done something improper with 
+				if (p == q){
+					// remove entity from entityList
+					delete p;
+					//delete q;
+					EntityList.erase(EntityList.begin() + k);
+					
+
+					break;
+				}
+
 			}
 
 		}
-
 	}
+
+
+	// now empty the containers after adding and removing entities 
+	addList.clear();
+	removeList.clear();
 
 
 }
