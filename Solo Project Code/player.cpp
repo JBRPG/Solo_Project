@@ -5,19 +5,22 @@
 void Player::update(float dt){
 	this->movePlayer();
 	this->shootPlayer(dt);
+	this->checkHealthPlayer();
 
 }
 
 void Player::collideWith(Enemy* enemy){
-	// Destroy the player upon collision
-	// unless invincible, destroy the enemy
+	// Take damage from enemy
+	// unless invincible
+	--this->hp;
 }
 
 void Player::collideWith(Bullet* bullet){
 	if (!bullet->getEnemyShot()) return;
 
 	// Take damage from bullet,
-	// or destroy player if no zero or less hp left
+	// unless invincible
+	--this->hp;
 
 }
 
@@ -29,7 +32,7 @@ void Player::collideWith(Bullet* bullet){
 void Player::movePlayer(){
 
 	float sqrt2 = 1.41;
-	bool dirArray[4] = {false, false, false, false};
+	bool dirArray[4] = { false, false, false, false };
 
 	// The following firections are in order:
 	// left, up, right, down
@@ -54,6 +57,28 @@ void Player::movePlayer(){
 		velocity.y /= sqrt2;
 	}
 	this->move(velocity);
+
+	// keep player from going out of bounds
+	if (this->getGlobalBounds().left < 0){
+		this->setPosition(this->getGlobalBounds().width / 2,
+			this->getPosition().y);
+	}
+	if (this->getPosition().x >= myScene->game->window.getSize().x
+		- this->getGlobalBounds().width/2){
+		std::cout << "Global bound width: " << this->getGlobalBounds().width << std::endl;
+		this->setPosition(myScene->game->window.getSize().x - this->getGlobalBounds().width / 2,
+			this->getPosition().y);
+	}
+	if (this->getGlobalBounds().top < 0){
+		this->setPosition(this->getPosition().x,
+			this->getGlobalBounds().height / 2);
+	}
+	if (this->getPosition().y >= myScene->game->window.getSize().y
+		- this->getGlobalBounds().height / 2){
+		std::cout << "Global bound height: " << this->getGlobalBounds().height << std::endl;
+		this->setPosition(this->getPosition().x,
+			myScene->game->window.getSize().y - this->getGlobalBounds().height / 2);
+	}
 }
 
 /*
@@ -86,7 +111,7 @@ void Player::shootPlayer(float dt){
 			1, 10, false, false, 0.0f);
 
 
-		bullet_p->setPosition(this->getPosition().x + this->getLocalBounds().width/2,
+		bullet_p->setPosition(this->getPosition().x + this->getGlobalBounds().width/2,
 			this->getPosition().y);
 		myScene->storeAddedEntity(bullet_p);
 
@@ -96,4 +121,8 @@ void Player::shootPlayer(float dt){
 
 
 	}
+}
+
+void Player::checkHealthPlayer(){
+	if (this->hp <= 0) myScene->storeRemovedEntity(this);
 }

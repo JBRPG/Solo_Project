@@ -45,13 +45,13 @@ public:
 	Entity(const sf::Texture& tex) :Sprite(tex),
 		health{ 1 }, speed{ 0 }, invincible{ true }
 	{
-		setOrigin(this->getLocalBounds().width/2, this->getLocalBounds().height/2);
+		setOrigin(this->getGlobalBounds().width/2, this->getGlobalBounds().height/2);
 	};
 	Entity(const sf::Texture& tex, const sf::IntRect& rect) :
 		Sprite(tex, rect),
 		health{ 1 }, speed{ 0 }, invincible{ true }
 	{
-		setOrigin(this->getLocalBounds().width / 2, this->getLocalBounds().height / 2);
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 	};
 
 	/*
@@ -61,13 +61,13 @@ public:
 	Entity(const sf::Texture& tex, int hp, float speed, bool invincible) :
 		Sprite(tex)
 	{
-		setOrigin(this->getLocalBounds().width / 2, this->getLocalBounds().height / 2);
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 	};
 	Entity(const sf::Texture& tex, const sf::IntRect& rect,
 		int hp, float speed, bool invincible) :
 		Sprite(tex, rect)
 	{
-		setOrigin(this->getLocalBounds().width / 2, this->getLocalBounds().height / 2);
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 	};
 
 	// Member functions

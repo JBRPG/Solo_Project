@@ -2,6 +2,8 @@
 
 #include <SFML\Graphics.hpp>
 
+#include <iostream>
+
 #include "entity.hpp"
 #include "bullet.hpp"
 #include "enemy.hpp"
@@ -70,6 +72,7 @@ public:
 
 	void movePlayer();
 	void shootPlayer(float dt);
+	void checkHealthPlayer();
 
 	void resetDelay() { shootDelay = delaySet; };
 

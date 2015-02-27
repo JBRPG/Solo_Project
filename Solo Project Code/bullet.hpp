@@ -6,6 +6,7 @@
 //#include "enemy.hpp"
 //#include "player.hpp"
 #include "terrain.hpp"
+#include "sceneGame.hpp"
 
 // forward declaration ??
 class Player;

@@ -3,16 +3,21 @@
 void Bullet::collideWith(Player*){
 	if (!enemyShot) return;
 
-	// Reduce hp on the player from the bullet
+	// destroy the bullet
+	// player health reduction taken care of
+	// in Player's code
+	myScene->storeRemovedEntity(this);
 
-	// Make the bullet desroyed afterwards
 
 }
 
 void Bullet::collideWith(Enemy*){
 	if (enemyShot) return;
 
-	// Reduce hp on the enemy from the bullet
+	// destroy bullet
+	// enemy health reduction in its own code
+
+	myScene->storeRemovedEntity(this);
 
 }
 

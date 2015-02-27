@@ -45,7 +45,7 @@ public:
 
 	void collideWith(Player*);
 	void collideWith(Bullet*);
-	void collideWith(Terrain*);
+	//void collideWith(Terrain*);
 
 	void shootEnemy(); // Will fire after set time period for now..
 
