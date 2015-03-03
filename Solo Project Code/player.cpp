@@ -102,11 +102,6 @@ void Player::shootPlayer(float dt){
 
 	if (Input::instance()->pressKeybutton(sf::Keyboard::Space)){
 
-		
-
-
-		///*
-
 		Bullet* bullet_p = new Bullet(myScene->game->texmgr.getRef("bulletPlayer"),
 			1, 10, false, false, 0.0f);
 
@@ -116,10 +111,6 @@ void Player::shootPlayer(float dt){
 		myScene->storeAddedEntity(bullet_p);
 
 		resetDelay();
-
-		//*/
-
-
 	}
 }
 

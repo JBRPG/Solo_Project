@@ -37,21 +37,17 @@ SceneGame::SceneGame(Game* game){
 	addEntity(player);
 
 
-
-
-	/*
-	// Let's add a bullet for test pruposes
-	
-
-	Bullet* bullet_p = new Bullet(this->game->texmgr.getRef("bulletPlayer"),
-		1, 5, false, false, 0.0f);
-
-	bullet_p->setPosition(200, 200);
-	addEntity(bullet_p);
-
-	//*/
-
 	// We will fill in other things later
+
+
+    // For a simple test, we will add in an enemy
+
+	enemy = new Enemy(this->game->texmgr.getRef("enemySprite"),
+		1,3,false);
+
+	enemy->setPosition(sf::Vector2f(400, 400));
+	addEntity(enemy);
+
 }
 
 void SceneGame::draw(float dt){

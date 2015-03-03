@@ -23,6 +23,8 @@ private:
 	// for temporary purpose, we will have a background sprite
 	sf::Sprite background;
 	Player* player;
+	
+	Enemy* enemy; // temporary variable
 
 	// Other important variables
 	collisionGrid gridBox;

@@ -1,12 +1,14 @@
 #pragma once
 
 #include "entity.hpp"
-//#include "player.hpp"
+#include "player.hpp"
 #include "bullet.hpp"
 #include "terrain.hpp"
 
+#include "sceneGame.hpp"
+
 // Forward declarations
-class Player;
+//class Player;
 
 class Enemy : public Entity{
 
@@ -16,6 +18,8 @@ private:
 	int hp;
 	float speed;
 	bool invincible;
+	float shootDelay;
+	const float delayTime = 1.0f;
 
 
 	// Group related variables
@@ -47,7 +51,10 @@ public:
 	void collideWith(Bullet*);
 	//void collideWith(Terrain*);
 
-	void shootEnemy(); // Will fire after set time period for now..
+
+	void update(float dt);
+	void shootEnemy(float dt); // Will fire after set time period for now..
+	void resetDelay() { shootDelay = delayTime; };
 
 
 };
