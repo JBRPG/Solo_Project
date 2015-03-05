@@ -1,34 +1,26 @@
 #include "bullet.hpp"
 
-void Bullet::collideWith(Player*){
-	if (!enemyShot) return;
+void Bullet::collideWith(Entity& other){
 
-	// destroy the bullet
-	// player health reduction taken care of
-	// in Player's code
+	if (Player* player = dynamic_cast<Player*>(&other)){
+		if (!enemyShot) return;
 
-	std::cout << "Player Hit" << std::endl;
+		// destroy the bullet
+		// player health reduction taken care of
+		// in Player's code
 
-	// I am having trouble of enemy bullet not hitting player
+		myScene->storeRemovedEntity(this);
+	}
+	else if (Enemy* enemy = dynamic_cast<Enemy*>(&other)){
+		if (enemyShot) return;
 
-	myScene->storeRemovedEntity(this);
+		// destroy bullet
+		// enemy health reduction in its own code
 
-
+		myScene->storeRemovedEntity(this);
+	}
 }
 
-void Bullet::collideWith(Enemy*){
-	if (enemyShot) return;
-
-	// destroy bullet
-	// enemy health reduction in its own code
-
-	std::cout << "Enemy Hit" << std::endl;
-
-	// I am having trouble of player bullet not hitting enemy
-
-	myScene->storeRemovedEntity(this);
-
-}
 
 void Bullet::update(float dt){
 

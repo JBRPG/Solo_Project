@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include "bullet.hpp"
 #include "terrain.hpp"
+#include "explosion.hpp"
 
 #include "sceneGame.hpp"
 
@@ -26,6 +27,10 @@ private:
 	bool withGroup;
 	int groupID; // the enemy is solo if value is set at 0
 
+	// functions
+
+	void destroyEnemy(); // make the enemy explode and disappear
+
 public:
 
 
@@ -47,8 +52,9 @@ public:
 	int getGroupID() { return this->groupID; };
 
 
-	void collideWith(Player*);
-	void collideWith(Bullet*);
+	void collideWith(Entity&);
+	//void collideWith(Player*);
+	//void collideWith(Bullet*);
 	//void collideWith(Terrain*);
 
 

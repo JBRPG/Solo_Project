@@ -18,23 +18,40 @@ void Enemy::shootEnemy(float dt){
 		bullet_p->setPosition(this->getPosition().x - this->getGlobalBounds().width / 2,
 			this->getPosition().y);
 		myScene->storeAddedEntity(bullet_p);
+		bullet_p->setEnemyShot(true);
 
 		resetDelay();
 	}
 }
 
-void Enemy::collideWith(Player* p){
+void Enemy::collideWith(Entity &other){
 
-    myScene->storeRemovedEntity(this);
+	if (Player* player = dynamic_cast<Player*>(&other)){
 
+		destroyEnemy();
+	}
+	else if (Bullet* bullet = dynamic_cast<Bullet*>(&other)) {
+		if (bullet->getEnemyShot()) return;
+
+		hp--;
+
+		if (hp <= 0){
+			destroyEnemy();
+
+
+		}
+	}
 }
 
-void Enemy::collideWith(Bullet* b){
-	if (b->getEnemyShot()) return;
+void Enemy::destroyEnemy(){
+	myScene->storeRemovedEntity(this);
 
-	hp--;
+	Explosion* explode = new Explosion
+		(myScene->game->texmgr.getRef("explodeTest"), 0);
+    explode->setSpawnTime(1.0f);
+	explode->setPosition(this->getPosition().x - this->getGlobalBounds().width / 2,
+		this->getPosition().y);
 
-	if (hp <= 0) myScene->storeRemovedEntity(this);
-
-
+	myScene->addEntity(explode); // you have to actually add the entity because
+	                             // storeAdded list has already been checked during update
 }

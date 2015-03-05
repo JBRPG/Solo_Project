@@ -9,19 +9,32 @@ void Player::update(float dt){
 
 }
 
-void Player::collideWith(Enemy* enemy){
-	// Take damage from enemy
-	// unless invincible
-	--this->hp;
-}
 
-void Player::collideWith(Bullet* bullet){
-	if (!bullet->getEnemyShot()) return;
+/* 
+   For all entity comparisons, we will use dynamic_cast
+   with the reference to Entity object - Entity& other
+   to keep code cleaner
 
-	// Take damage from bullet,
-	// unless invincible
-	--this->hp;
+   dynamic_cast to a pointer type returns NULL if the cast fails
+   dynamic_cast to a reference type would throw an exception on failure
+*/
 
+void Player::collideWith(Entity& other){
+	
+	// Check if the entity is Enemy
+	if (Enemy* enemy = dynamic_cast<Enemy*>(&other)){
+		// Take damage from enemy
+		// unless invincible
+		--this->hp;
+	}
+	// Check if the entity is Bullet
+	else if (Bullet* bullet = dynamic_cast<Bullet*>(&other)){
+		if (!bullet->getEnemyShot()) return;
+
+		// Take damage from bullet,
+		// unless invincible
+		--this->hp;
+	}
 }
 
 
@@ -109,6 +122,7 @@ void Player::shootPlayer(float dt){
 		bullet_p->setPosition(this->getPosition().x + this->getGlobalBounds().width/2,
 			this->getPosition().y);
 		myScene->storeAddedEntity(bullet_p);
+		bullet_p->setEnemyShot(false);
 
 		resetDelay();
 	}

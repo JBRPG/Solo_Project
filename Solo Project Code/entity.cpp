@@ -16,6 +16,7 @@ void Entity::update(float dt){
   so other sub-classes will have unique code
 */
 
-void Entity::collideWith(Entity*){
-
-}
+//void Entity::collideWith(Entity*){ 
+	
+//} 
+ 

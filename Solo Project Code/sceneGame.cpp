@@ -133,7 +133,7 @@ void SceneGame::update(float dt){
 	}
 
 
-	// now empty the containers after adding and removing entities 
+	//empty the containers of added and removed entities 
 	addList.clear();
 	removeList.clear();
 
@@ -213,22 +213,14 @@ void SceneGame::checkCollisions(){
 
 	populateGrid();
 
+	// Right now I am unable to get the collision detection to work!
+
 	for (auto i = 0; i < gridBox.slicesX; ++i){
 		for (auto j = 0; j < gridBox.slicesY; ++j){
 			if (gridBox.cell[i][j].nEntities < 2) continue;
 
 			for (auto k = 0; k < gridBox.cell[i][j].nEntities; ++k){
 				for (auto l = 0; l < gridBox.cell[i][j].nEntities; ++l){
-
-					// Check if the two items are already checked
-					// go to next set if the two same items are already checked
-					
-					/*
-
-					if (gridBox.cell[i][j].checked[k] &&
-						gridBox.cell[i][j].checked[l]) continue;
-
-				    */
 
 					// Set up the pointers and compare them
 					auto p = gridBox.cell[i][j].items[k];
@@ -238,8 +230,13 @@ void SceneGame::checkCollisions(){
 					if (p->getGlobalBounds().
 						intersects(q->getGlobalBounds() )){
 
-						// Do a series of collisions depending on the sub-type of entity
-						p->collideWith(q);
+						// Do a series of collisions depending on the specific entities
+
+						/*
+						  However, I end up always calling the BASE function of collideWith
+						  instead of the derived types (Player, Enemy, Bullet, etc.)
+						*/
+						p->collideWith(*q);
 
 					}
 

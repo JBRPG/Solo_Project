@@ -74,10 +74,11 @@ public:
 
 	virtual void update(float dt);
 
-	// Base functions for subclasses
-	virtual void collideWith(Entity*);
-   //	virtual void spawnEntity(Entity*); // unknown if useable
+	virtual void collideWith(Entity&) = 0;
+	// Right now the derived classes of collideWIth are not being called,
+	// even with the virtual removed
 
+   
 	void setHealth(int hp) { this -> health = hp; };
 	int getHealth() { return health; };
 	void setSpeed(float speed) { this->speed = speed; };

@@ -67,8 +67,9 @@ public:
 	void update(float dt);
 
 
-	void collideWith(Bullet*);
-	void collideWith(Enemy*);
+	void collideWith(Entity&);
+	//void collideWith(Bullet*);
+	//void collideWith(Enemy*);
 
 	void movePlayer();
 	void shootPlayer(float dt);

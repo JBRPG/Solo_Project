@@ -57,8 +57,9 @@ public:
 	bool getEnemyShot() { return enemyShot; };
 
 
-	void collideWith(Player*);
-	void collideWith(Enemy*);
+	void collideWith(Entity&);
+	//void collideWith(Player*);
+	//void collideWith(Enemy*);
 	void update (float dt);
 	
 };
