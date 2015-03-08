@@ -107,9 +107,9 @@ void Player::shootPlayer(float dt){
 
 	// we reduce time for shoot delay
 
-	shootDelay -= dt;
+	shootDelay --;
 
-	if (shootDelay > 0.0f) return;
+	if (shootDelay > 0) return;
 
 	
 

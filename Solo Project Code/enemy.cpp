@@ -7,9 +7,9 @@ void Enemy::update(float dt){
 
 
 void Enemy::shootEnemy(float dt){
-	shootDelay -= dt;
+	shootDelay --;
 
-	if (shootDelay <= 0.0f){
+	if (shootDelay <= 0){
 
 		Bullet* bullet_p = new Bullet(myScene->game->texmgr.getRef("bulletEnemy"),
 			1, 10, false, true, 180.0f);

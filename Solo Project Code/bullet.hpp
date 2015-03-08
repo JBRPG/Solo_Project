@@ -58,8 +58,11 @@ public:
 
 
 	void collideWith(Entity&);
-	//void collideWith(Player*);
-	//void collideWith(Enemy*);
 	void update (float dt);
+
+	// I want the bullet to have dynamic movement
+	// and will be implemented later
+
+
 	
 };

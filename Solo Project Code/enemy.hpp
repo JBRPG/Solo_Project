@@ -19,8 +19,8 @@ private:
 	int hp;
 	float speed;
 	bool invincible;
-	float shootDelay;
-	const float delayTime = 1.0f;
+	int shootDelay;
+	const int delayTime = 60;
 
 
 	// Group related variables
@@ -53,14 +53,14 @@ public:
 
 
 	void collideWith(Entity&);
-	//void collideWith(Player*);
-	//void collideWith(Bullet*);
-	//void collideWith(Terrain*);
-
+	
 
 	void update(float dt);
 	void shootEnemy(float dt); // Will fire after set time period for now..
 	void resetDelay() { shootDelay = delayTime; };
+
+	// I want the enemy to have dynamic movement
+	// I will implement it later
 
 
 };

@@ -25,9 +25,9 @@ private:
 	// Powerups ?
 	// Weapons ?
 
-	float delaySet = 0.10f;
-	float shootDelay = delaySet;
-	float prevTime = 0.0f;
+	int delaySet = 10;
+	int shootDelay = delaySet;
+	//float prevTime = 0.0f;
 
 
 	
@@ -68,9 +68,7 @@ public:
 
 
 	void collideWith(Entity&);
-	//void collideWith(Bullet*);
-	//void collideWith(Enemy*);
-
+	
 	void movePlayer();
 	void shootPlayer(float dt);
 	void checkHealthPlayer();
