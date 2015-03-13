@@ -2,8 +2,6 @@
 
 #include <SFML\Graphics.hpp>
 
-//#include "sceneGame.hpp"
-
 /*
    Entity inherits all public and protected data and functions from
    Sprite class. Sprite inherits from both Drawable and Transformable.
@@ -15,6 +13,8 @@
 
 // forward declare
 class SceneGame;
+
+class Movement;
 
 
 class Entity : public sf::Sprite{
@@ -29,8 +29,13 @@ private:
 
 protected:
 
-	SceneGame *myScene; // let's keep it at null
-	                       // since setScene will take care of it
+	SceneGame *myScene;
+	Movement *myMovement;
+
+
+	std::vector <float> moveArgs;
+
+	int ticks = 0; // We are counting up frame by frame for behavior consistency 
 
 
 
@@ -74,9 +79,12 @@ public:
 
 	virtual void update(float dt);
 
+	virtual int getTicks() { return ticks; };
+
+	// we leave its base function empty so the derived versions
+	// can be called with unique code
 	virtual void collideWith(Entity&) = 0;
-	// Right now the derived classes of collideWIth are not being called,
-	// even with the virtual removed
+	virtual void updateMovement(Movement&) = 0;
 
    
 	void setHealth(int hp) { this -> health = hp; };
@@ -88,6 +96,24 @@ public:
 
 	void setScene(SceneGame *scene){myScene = scene;};
     SceneGame* getScene(){return myScene;};
+
+	void setMovement(Movement* movement) { myMovement = movement; };
+	Movement* getMovement() { return myMovement; };
+
+
+	// This is for initalization purpose
+	std::vector <float> initMoveArgs(float *args) {
+		int argSize = sizeof(args) / sizeof(float);
+
+		std::vector <float> argVec(argSize);
+
+		for (int i = 0; i < argSize; ++i){
+			argVec.push_back(args[i]);
+		}
+
+		moveArgs = argVec;
+		return argVec;
+	};
 
 
 

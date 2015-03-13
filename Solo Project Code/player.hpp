@@ -67,6 +67,9 @@ public:
 	void update(float dt);
 
 
+	int getTicks() { return ticks; };
+
+
 	void collideWith(Entity&);
 	
 	void movePlayer();
@@ -74,5 +77,9 @@ public:
 	void checkHealthPlayer();
 
 	void resetDelay() { shootDelay = delaySet; };
+
+	// empty functions
+
+	void updateMovement(Movement&) {};
 
 };

@@ -34,5 +34,7 @@ void Bullet::update(float dt){
 	this->move(speed * cos(this->getRotation() * deg_to_rad),
 		       speed * sin(this->getRotation() * deg_to_rad));
 
+	++ticks;
+
 
 }

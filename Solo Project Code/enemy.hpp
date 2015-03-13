@@ -21,6 +21,7 @@ private:
 	bool invincible;
 	int shootDelay;
 	const int delayTime = 60;
+	sf::Vector2f spawnVertex;
 
 
 	// Group related variables
@@ -37,12 +38,14 @@ public:
 
 	Enemy(const sf::Texture& tex, int hp, float speed, bool invincible) :
 		hp{ hp }, speed{ speed }, invincible{ invincible },
-		Entity(tex, hp, speed, invincible), withGroup{ false }, groupID{0}
+		Entity(tex, hp, speed, invincible), withGroup{ false }, groupID{0},
+		spawnVertex{ this->getPosition() }
 	{};
 	Enemy(const sf::Texture& tex, const sf::IntRect& rect,
 		int hp, float speed, bool invincible) :
 		hp{ hp }, speed{ speed }, invincible{ invincible },
-		Entity(tex, rect, hp, speed, invincible), withGroup{ false }, groupID{ 0 }
+		Entity(tex, rect, hp, speed, invincible), withGroup{ false }, groupID{ 0 },
+		spawnVertex{ this->getPosition() }
 	{};
 
 	void setWithGroup(bool group) { this->withGroup = group; };
@@ -56,11 +59,16 @@ public:
 	
 
 	void update(float dt);
+	int getTicks() { return ticks; };
+
 	void shootEnemy(float dt); // Will fire after set time period for now..
+	void moveEnemy(); // Will use movement class to update enemy movement
 	void resetDelay() { shootDelay = delayTime; };
 
 	// I want the enemy to have dynamic movement
 	// I will implement it later
+
+	void updateMovement(Movement&) {};
 
 
 };

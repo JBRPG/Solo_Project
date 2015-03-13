@@ -44,8 +44,17 @@ SceneGame::SceneGame(Game* game){
 
 	enemy = new Enemy(this->game->texmgr.getRef("enemySprite"),
 		1,3,false);
+    enemy->setPosition(sf::Vector2f(400, 400));
 
-	enemy->setPosition(sf::Vector2f(400, 400));
+	// We will add in a unique movement for the enemy
+	// to make sure it behaves correctly
+
+	// I am having a problem initalizing the movement pattern
+	// because I may not understand how to use an array/vector as a constructor parameter
+	float enemyArg1[] = { 100.0f };
+	enemy->setMovement(new Movement("circle", enemy->getPosition(),
+		enemy->initMoveArgs(enemyArg1)));
+
 	addEntity(enemy);
 
 }

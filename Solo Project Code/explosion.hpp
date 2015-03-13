@@ -38,6 +38,7 @@ public:
 	{};
 
 	void update(float dt);
+	int getTicks() { return ticks; };
 
 	void setSpawnTime(float time){ spawnTime = time; };
 	float getSpawnTime() { return spawnTime; };
@@ -48,5 +49,8 @@ public:
 
 	// We will keep the collision function empty for simplicity
 	void collideWith(Entity&) {};
+
+	// We will keep the movement empty for simplicity
+	void updateMovement(Movement&) {};
 
 };

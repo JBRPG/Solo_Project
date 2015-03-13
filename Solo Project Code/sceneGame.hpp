@@ -5,6 +5,7 @@
 #include "scene.hpp"
 #include "game.hpp"
 #include "entity.hpp"
+#include "movement.hpp"
 #include "player.hpp"
 #include "collisionGrid.hpp"
 

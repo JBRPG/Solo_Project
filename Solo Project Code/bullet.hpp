@@ -59,10 +59,13 @@ public:
 
 	void collideWith(Entity&);
 	void update (float dt);
+	int getTicks() { return ticks; };
 
 	// I want the bullet to have dynamic movement
 	// and will be implemented later
 
+	// For now, we leave the updateMovement empty
+	void updateMovement(Movement&) {};
 
 	
 };
