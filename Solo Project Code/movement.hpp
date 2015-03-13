@@ -77,15 +77,17 @@ private:
 	// The function pointer used for calling functions based on name
 	std::function <void(std::string, sf::Vector2f, std::vector<float>)> *movementType;
 
+
+public:
+
+	// Constructor
+
 	// Constructor
 	Movement(std::string name, sf::Vector2f vertex, std::vector<float>args) :
-		name{ name }, coordinates{ vertex }, args{args}
+		name{ name }, coordinates{ vertex }, args{ args }
 	{
 
 	};
-
-
-public:
 
 	void updateMovement(Entity&, std::string);
 
