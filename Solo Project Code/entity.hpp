@@ -108,7 +108,8 @@ public:
 		std::vector <float> argVec(argSize);
 
 		for (int i = 0; i < argSize; ++i){
-			argVec.push_back(args[i]);
+			if (i == 0) argVec[0] = args[i];
+			else argVec.push_back(args[i]);
 		}
 
 		moveArgs = argVec;

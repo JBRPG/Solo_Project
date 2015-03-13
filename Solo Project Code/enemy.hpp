@@ -68,7 +68,7 @@ public:
 	// I want the enemy to have dynamic movement
 	// I will implement it later
 
-	void updateMovement(Movement&) {};
+	void updateMovement(Movement&);
 
 
 };

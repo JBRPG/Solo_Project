@@ -12,6 +12,11 @@ void Enemy::update(float dt){
 }
 
 
+void Enemy::updateMovement(Movement& entityMove){
+	
+	entityMove.update(*this);
+}
+
 void Enemy::shootEnemy(float dt){
 	shootDelay --;
 

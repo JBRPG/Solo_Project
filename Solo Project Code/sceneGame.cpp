@@ -27,7 +27,7 @@ SceneGame::SceneGame(Game* game){
 
 	// Initialize the entities
 
-	// for now we just add in the player and a few others
+	// for now we just add in the player and a few enemies
 	// hardcoded until we make use of the random generator
 
 	player = new Player(this->game->texmgr.getRef("playerSprite"),
@@ -49,8 +49,6 @@ SceneGame::SceneGame(Game* game){
 	// We will add in a unique movement for the enemy
 	// to make sure it behaves correctly
 
-	// I am having a problem initalizing the movement pattern
-	// because I may not understand how to use an array/vector as a constructor parameter
 	float enemyArg1[] = { 100.0f };
 	enemy->setMovement(new Movement("circle", enemy->getPosition(),
 		enemy->initMoveArgs(enemyArg1)));

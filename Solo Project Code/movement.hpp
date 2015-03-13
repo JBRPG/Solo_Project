@@ -82,14 +82,16 @@ public:
 
 	// Constructor
 
-	// Constructor
+	// When initalizing values with an initializer list,
+	// use {} for single items and () for collection of items
+
 	Movement(std::string name, sf::Vector2f vertex, std::vector<float>args) :
-		name{ name }, coordinates{ vertex }, args{ args }
+		name(name), coordinates{vertex }, args(args)
 	{
 
 	};
 
-	void updateMovement(Entity&, std::string);
+	void update(Entity&);
 
 	void setName(std::string name) { this->name = name; };
 	void setEntityVertex(sf::Vector2f vec) { coordinates = vec; };

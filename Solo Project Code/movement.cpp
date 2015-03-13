@@ -1,11 +1,8 @@
 #include "movement.hpp"
 
-void Movement::updateMovement(Entity& entity, std::string name){
+void Movement::update(Entity& entity){
 
-
-
-
-
+	lookupMovement(entity, this->name);
 
 }
 
@@ -29,6 +26,7 @@ void Movement::lookupMovement(Entity& entity, std::string name){
 	}
 	else {
 		std::cerr << "Cannot find movement with the name " << name << std::endl;
+		std::exit(1);
 	}
 
 
@@ -47,6 +45,7 @@ void Movement::circle(Entity& entity, sf::Vector2f vertex, std::vector<float> pa
 	// The circle shall have one float argument
 	if (params.size() != 1){
 		std::cerr << "Need only one constant float value for circle: radius" << std::endl;
+		return;
 	}
 	float pi = 3.14;
 	float deg_to_rad = pi / 180;
