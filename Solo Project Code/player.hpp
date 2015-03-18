@@ -32,9 +32,9 @@ private:
 
 	
 	// From entity
-	int hp;
-	float speed;
-	bool invincibility;
+	//int hp;
+	//float speed;
+	//bool invincibility;
 
 	// other classes
 
@@ -44,24 +44,18 @@ public:
 
 	Player(const sf::Texture& tex, int hp, float speed, bool invincibility,
 		int lives) :
-		hp{ hp },
-		speed{ speed },
-		invincibility{ invincibility },
 
 
 
-		Entity(tex, this->hp, this->speed, this->invincible)
+		Entity(tex, hp, speed, invincible)
 	{};
 
 
 	Player(const sf::Texture& tex, const sf::IntRect& rect, int hp,
 		  float speed, bool invincibility,
 		int lives) :
-		hp{ hp },
-		speed{ speed },
-		invincibility{ invincibility },
 
-		Entity(tex, rect, this->hp, this->speed, this->invincible)
+		Entity(tex, rect, hp, speed, invincibility)
 	{};
 
 	void update(float dt);

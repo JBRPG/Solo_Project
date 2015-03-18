@@ -44,9 +44,9 @@ void Enemy::collideWith(Entity &other){
 	else if (Bullet* bullet = dynamic_cast<Bullet*>(&other)) {
 		if (bullet->getEnemyShot()) return;
 
-		hp--;
+		health--;
 
-		if (hp <= 0){
+		if (health <= 0){
 			destroyEnemy();
 
 

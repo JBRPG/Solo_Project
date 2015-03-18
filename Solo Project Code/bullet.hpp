@@ -17,9 +17,9 @@ class Bullet : public Entity{
 
 private:
 	// From entity
-	int hp;
-	float speed;
-	bool invincibility;
+	//int hp;
+	//float speed;
+	//bool invincibility;
 
 	bool enemyShot; // if false, then player shot bullet
 	float rotation;
@@ -31,22 +31,16 @@ public:
 
 	Bullet(const sf::Texture& tex, int hp, float speed, bool invincibility,
 		bool enemyShot, float rot) :
-		hp{hp},
-		speed{speed},
-		invincibility{invincibility},
 		rotation{rot},
-		Entity(tex, this->hp, this->speed, this->invincible)
+		Entity(tex, hp, speed, invincibility)
 	{
 		this->setRotation(rot);
 	};
 
 	Bullet(const sf::Texture& tex, const sf::IntRect& rect, int hp, float speed, bool invincibility,
 		bool enemyShot, float rot) :
-		hp{ hp },
-		speed{ speed },
-		invincibility{ invincibility },
 		rotation{ rot },
-		Entity(tex, rect, this->hp, this->speed, this->invincible)
+		Entity(tex, rect, hp, speed, invincibility)
 	{
 		this->setRotation(rot);
 	};

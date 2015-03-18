@@ -16,9 +16,9 @@ class Enemy : public Entity{
 private:
 
 	// From entity
-	int hp;
-	float speed;
-	bool invincible;
+	//int hp;
+	//float speed;
+	//bool invincible;
 	int shootDelay;
 	const int delayTime = 60;
 	sf::Vector2f spawnVertex;
@@ -37,14 +37,12 @@ public:
 
 
 	Enemy(const sf::Texture& tex, int hp, float speed, bool invincible) :
-		hp{ hp }, speed{ speed }, invincible{ invincible },
-		Entity(tex, this->hp, this->speed, this->invincible), withGroup{ false }, groupID{ 0 },
+		Entity(tex, hp, speed, invincible), withGroup{ false }, groupID{ 0 },
 		spawnVertex{ this->getPosition() }
 	{};
 	Enemy(const sf::Texture& tex, const sf::IntRect& rect,
 		int hp, float speed, bool invincible) :
-		hp{ hp }, speed{ speed }, invincible{ invincible },
-		Entity(tex, rect, this->hp, this->speed, this->invincible), withGroup{ false }, groupID{ 0 },
+		Entity(tex, rect, hp, speed, invincible), withGroup{ false }, groupID{ 0 },
 		spawnVertex{ this->getPosition() }
 	{};
 

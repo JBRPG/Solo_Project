@@ -25,7 +25,7 @@ void Player::collideWith(Entity& other){
 	if (Enemy* enemy = dynamic_cast<Enemy*>(&other)){
 		// Take damage from enemy
 		// unless invincible
-		--this->hp;
+		--this->health;
 	}
 	// Check if the entity is Bullet
 	else if (Bullet* bullet = dynamic_cast<Bullet*>(&other)){
@@ -33,7 +33,7 @@ void Player::collideWith(Entity& other){
 
 		// Take damage from bullet,
 		// unless invincible
-		--this->hp;
+		--this->health;
 	}
 }
 
@@ -129,5 +129,5 @@ void Player::shootPlayer(float dt){
 }
 
 void Player::checkHealthPlayer(){
-	if (this->hp <= 0) myScene->storeRemovedEntity(this);
+	if (this->health <= 0) myScene->storeRemovedEntity(this);
 }
