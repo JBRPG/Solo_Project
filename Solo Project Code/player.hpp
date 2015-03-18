@@ -50,7 +50,7 @@ public:
 
 
 
-		Entity(tex, hp, speed, invincibility)
+		Entity(tex, this->hp, this->speed, this->invincible)
 	{};
 
 
@@ -61,7 +61,7 @@ public:
 		speed{ speed },
 		invincibility{ invincibility },
 
-		Entity(tex, rect, hp, speed, invincibility)
+		Entity(tex, rect, this->hp, this->speed, this->invincible)
 	{};
 
 	void update(float dt);

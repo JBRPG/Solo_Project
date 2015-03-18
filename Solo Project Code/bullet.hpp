@@ -35,7 +35,7 @@ public:
 		speed{speed},
 		invincibility{invincibility},
 		rotation{rot},
-		Entity(tex, hp, speed, invincibility)
+		Entity(tex, this->hp, this->speed, this->invincible)
 	{
 		this->setRotation(rot);
 	};
@@ -46,7 +46,7 @@ public:
 		speed{ speed },
 		invincibility{ invincibility },
 		rotation{ rot },
-		Entity(tex, rect, hp, speed, invincibility)
+		Entity(tex, rect, this->hp, this->speed, this->invincible)
 	{
 		this->setRotation(rot);
 	};

@@ -43,15 +43,16 @@ SceneGame::SceneGame(Game* game){
     // For a simple test, we will add in an enemy
 
 	enemy = new Enemy(this->game->texmgr.getRef("enemySprite"),
-		1,3,false);
+		1,5,false);
     enemy->setPosition(sf::Vector2f(400, 400));
 
 	// We will add in a unique movement for the enemy
 	// to make sure it behaves correctly
 
-	float enemyArg1[] = { 100.0f };
-	enemy->setMovement(new Movement("circle", enemy->getPosition(),
-		enemy->initMoveArgs(enemyArg1)));
+	std::vector <float> argvec = {170.0f};
+
+	enemy->setMovement(new Movement("straight", enemy->getPosition(),
+		argvec));
 
 	addEntity(enemy);
 

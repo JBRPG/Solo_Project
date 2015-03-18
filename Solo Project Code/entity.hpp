@@ -21,13 +21,13 @@ class Entity : public sf::Sprite{
 
 private:
 
+
+protected:
+
 	int health;
 	float speed;
 	sf::Time spawntime;
 	bool invincible;
-
-
-protected:
 
 	SceneGame *myScene;
 	Movement *myMovement;
@@ -64,13 +64,15 @@ public:
 	   AFTER placing Sprite's parameters first
 	*/
 	Entity(const sf::Texture& tex, int hp, float speed, bool invincible) :
-		Sprite(tex)
+		Sprite(tex),
+		health( hp ), speed( speed ), invincible(invincible)
 	{
 		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 	};
 	Entity(const sf::Texture& tex, const sf::IntRect& rect,
 		int hp, float speed, bool invincible) :
-		Sprite(tex, rect)
+		Sprite(tex, rect),
+		health(hp), speed(speed), invincible(invincible)
 	{
 		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 	};
@@ -99,22 +101,6 @@ public:
 
 	void setMovement(Movement* movement) { myMovement = movement; };
 	Movement* getMovement() { return myMovement; };
-
-
-	// This is for initalization purpose
-	std::vector <float> initMoveArgs(float *args) {
-		int argSize = sizeof(args) / sizeof(float);
-
-		std::vector <float> argVec(argSize);
-
-		for (int i = 0; i < argSize; ++i){
-			if (i == 0) argVec[0] = args[i];
-			else argVec.push_back(args[i]);
-		}
-
-		moveArgs = argVec;
-		return argVec;
-	};
 
 
 
