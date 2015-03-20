@@ -18,7 +18,7 @@
 	  String: "name" - search the name on the collection of movement patterns.
 	          if the name matches the pattern, a specified function will be called
 			  to give the entity movement
-	* Vector2f: coordinates ([0],[1]) - (x,y) or (y,x).
+	* Vector2f: vertex ([0],[1]) - (x,y) or (y,x).
 	          The first index of vector2f will be used
 			  as primary movement axis (x or y).
 			  The second index will be reserved for
@@ -71,12 +71,14 @@ class Movement {
 private:
 	std::vector<float> args;
 	std::string name;
-	sf::Vector2f coordinates;
+	
+	sf::Vector2f vertex;
 
+	std::vector <sf::Vector2f> waypoints;
+	int waypoint_idx;
 
-	// The function pointer used for calling functions based on name
-	std::function <void(std::string, sf::Vector2f, std::vector<float>)> *movementType;
-
+	sf::Vector2f curr_waypoint, next_waypoint;
+	float move_angle;
 
 public:
 
@@ -85,20 +87,59 @@ public:
 	// When initalizing values with an initializer list,
 	// use {} for single items and () for collection of items
 
-	Movement(std::string name, sf::Vector2f vertex, std::vector<float>args) :
-		name(name), coordinates{vertex }, args(args)
-	{
 
+	// For movements without waypoints
+
+	Movement(std::string name, sf::Vector2f vertex, std::vector<float>args) :
+		name(name), vertex{vertex}, args(args)
+	{};
+
+	// For movements with waypoints
+
+	Movement(sf::Vector2f vertex, std::vector<sf::Vector2f> waypoints):
+		vertex{ vertex }
+	{
+		/*
+		  We shall initalize the waypoints based on offset from the vertex
+		  (i.e. waypoint[0] = (10, 10), then this->waypoint[0] = vertex + waypoint[0])
+
+		*/
+		for (auto i = waypoints.begin(); i != waypoints.end(); ++i){
+			sf::Vector2f itor_vec = *i;
+			this->waypoints.push_back(vertex + itor_vec);
+		}
+		curr_waypoint = vertex;
+		next_waypoint = waypoints[0];
+		waypoint_idx = 0;
 	};
+
+
+	// functions
 
 	void update(Entity&);
 
 	void setName(std::string name) { this->name = name; };
-	void setEntityVertex(sf::Vector2f vec) { coordinates = vec; };
+
+	void setEntityVertex(sf::Vector2f vertex) { vertex = vertex; };
+	
 	void setFloatArgs(std::vector<float> args) { this->args = args; };
+
+	void setWaypoints(std::vector<sf::Vector2f> _waypoints){
+		this->waypoints.clear();
+		for (auto i = _waypoints.begin(); i != _waypoints.end(); ++i){
+			sf::Vector2f itor_vec = *i;
+			this->waypoints.push_back(vertex + itor_vec);
+		}
+		curr_waypoint = vertex;
+		next_waypoint = waypoints[0];
+	};
+	std::vector <sf::Vector2f> getWaypoints(){ return waypoints; };
 
 
 	void lookupMovement(Entity&, std::string);
+	void lookupMovement(Entity&, std::vector<sf::Vector2f>);
+
+	void setMoveAngle();
 
 	// Functions used to define specific movements for entities
 	// Will be used for function lookup table

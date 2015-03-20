@@ -1,4 +1,5 @@
 #include "movement.hpp"
+#include <cmath>
 
 // might end up trying to make the parameter a pointer
 // if it fixes the inheritence value problem
@@ -7,7 +8,25 @@
 
 void Movement::update(Entity& entity){
 
-	lookupMovement(entity, this->name);
+	/* 
+	if movement has a string name and float args, then
+	look up movement by name
+
+	otherwise if movement has a vector of sf::Vector2f waypoints
+	then look up movement by waypoints
+	*/
+	if (!name.empty() && !args.empty()){
+		lookupMovement(entity, this->name);
+		return;
+	}
+
+	if (!waypoints.empty()){
+		lookupMovement(entity, this->waypoints);
+		return;
+	}
+
+	// return error print and close program if none of these options are valid
+
 
 }
 
@@ -27,17 +46,47 @@ void Movement::lookupMovement(Entity& entity, std::string name){
 
 	auto entry = table.find(name);
 	if (entry != table.end()){
-		(this->*(entry->second))(entity, coordinates, args);
+		(this->*(entry->second))(entity, vertex, args);
 	}
 	else {
 		std::cerr << "Cannot find movement with the name " << name << std::endl;
 		std::exit(1);
 	}
 
+}
+
+void Movement::lookupMovement(Entity& entity, std::vector<sf::Vector2f> waypoints){
+	/*
+       Check if the entity has reached to the next point.
+	   If true, then do the following:
+	     Check if the index has not reached the end
+		   if true, move current waypoint to next one and move next waypoint by index of 1
+		   recalculate the movement angle with the new waypoint values
+		if false, then assign current waypoint to next and keep moving
+
+	  Now move the entity from one waypoint to another.
+	*/
+
+	if (entity.getGlobalBounds().contains(next_waypoint) &&
+		waypoint_idx < waypoints.size()){
+		curr_waypoint = next_waypoint;
+		next_waypoint = waypoints[++waypoint_idx];
+		setMoveAngle();
+	}
+
+	entity.move(entity.getSpeed() * cos(move_angle),
+		entity.getSpeed() * sin(move_angle));
 
 
 }
 
+void Movement::setMoveAngle(){
+	sf::Vector2f point_difference;
+	point_difference.x = next_waypoint.x - curr_waypoint.x;
+	point_difference.y = next_waypoint.y - curr_waypoint.y;
+
+	move_angle = atan2f (point_difference.y, point_difference.x);
+}
 
 
 // for each individual function involving movement,
@@ -54,7 +103,7 @@ void Movement::circle(Entity& entity, sf::Vector2f vertex, std::vector<float> pa
 	float pi = 3.14;
 	float deg_to_rad = pi / 180;
 
-	// This has no problems since entity itself has ticks
+
 	entity.setPosition(
 		params[0] * cos(entity.getTicks() * deg_to_rad) + vertex.x,
 		params[0] * sin(entity.getTicks() * deg_to_rad) + vertex.y);
@@ -71,7 +120,7 @@ void Movement::straight(Entity& entity, sf::Vector2f vertex, std::vector<float> 
 	float pi = 3.14;
 	float deg_to_rad = pi / 180;
 
-	// This has problems since entity itself, not subclasses return 0 from public functions
+
 	entity.move(entity.getSpeed() * cos(params[0] * deg_to_rad),
 		        entity.getSpeed() * sin(params[0] * deg_to_rad));
 
@@ -95,8 +144,7 @@ void Movement::sinusodial(Entity& entity, sf::Vector2f vertex, std::vector<float
 
 	entity.setPosition(
 
-		// only for x
-		// This has problems since entity itself, not subclasses return 0 from public functions
+
 		entity.getPosition().x + entity.getSpeed(),
 		params[0] * sin( (pi / 2) * params[1] * entity.getTicks()) + vertex.y);
 

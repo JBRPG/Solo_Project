@@ -65,10 +65,6 @@ void SceneGame::draw(float dt){
 	this->game->window.draw(background);
 
 	// draw the entities
-	
-	//*
-
-	// let's test this out for now....
 
 	this->game->window.setView(gameView);
 
@@ -76,7 +72,6 @@ void SceneGame::draw(float dt){
 		sf::Sprite* idxSprite = getEntity(i);
 		this->game->window.draw(*idxSprite);
 	}
-	//*/
 
 }
 
@@ -105,10 +100,6 @@ void SceneGame::update(float dt){
 		// remove the destroyed entities
 		// must iterate backwards for both vector-based entity lists
 
-		// perhaps the error is caused by the use of iterators
-		// if I get a negative value then the iterator can no longer be decrementable
-		// and thus making itor invalid
-
 		for (int j = removeList.size() - 1; j >= 0; --j){
 			// check the entities one by one
 			for (int k = EntityList.size() - 1; k >= 0; --k){
@@ -122,13 +113,9 @@ void SceneGame::update(float dt){
 				Entity* p = removeList[j]; // pointer to entities in removeList
 				Entity* q = EntityList[k]; // pointer to entities in EntityList
 
-
-				// This area is giving me a game crash
-				// because I may have done something improper with 
 				if (p == q){
 					// remove entity from entityList
 					delete p;
-					//delete q;
 					EntityList.erase(EntityList.begin() + k);
 					
 
@@ -221,7 +208,6 @@ void SceneGame::checkCollisions(){
 
 	populateGrid();
 
-	// Right now I am unable to get the collision detection to work!
 
 	for (auto i = 0; i < gridBox.slicesX; ++i){
 		for (auto j = 0; j < gridBox.slicesY; ++j){
@@ -239,11 +225,6 @@ void SceneGame::checkCollisions(){
 						intersects(q->getGlobalBounds() )){
 
 						// Do a series of collisions depending on the specific entities
-
-						/*
-						  However, I end up always calling the BASE function of collideWith
-						  instead of the derived types (Player, Enemy, Bullet, etc.)
-						*/
 						p->collideWith(*q);
 
 					}
