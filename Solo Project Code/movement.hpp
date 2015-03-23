@@ -96,7 +96,7 @@ public:
 
 	// For movements with waypoints
 
-	Movement(sf::Vector2f vertex, std::vector<sf::Vector2f> waypoints):
+	Movement(sf::Vector2f vertex, std::vector<sf::Vector2f> _waypoints):
 		vertex{ vertex }
 	{
 		/*
@@ -104,13 +104,16 @@ public:
 		  (i.e. waypoint[0] = (10, 10), then this->waypoint[0] = vertex + waypoint[0])
 
 		*/
-		for (auto i = waypoints.begin(); i != waypoints.end(); ++i){
-			sf::Vector2f itor_vec = *i;
-			this->waypoints.push_back(vertex + itor_vec);
+		for (auto i = _waypoints.begin(); i != _waypoints.end(); ++i){
+			sf::Vector2f itor_vec = sf::Vector2f(
+				(*i).x + vertex.x,
+				(*i).y + vertex.y);
+			this->waypoints.push_back(itor_vec);
 		}
 		curr_waypoint = vertex;
 		next_waypoint = waypoints[0];
 		waypoint_idx = 0;
+		setMoveAngle();
 	};
 
 
@@ -124,14 +127,19 @@ public:
 	
 	void setFloatArgs(std::vector<float> args) { this->args = args; };
 
+	// The intialization behaves like the constructor for waypoints
 	void setWaypoints(std::vector<sf::Vector2f> _waypoints){
 		this->waypoints.clear();
 		for (auto i = _waypoints.begin(); i != _waypoints.end(); ++i){
-			sf::Vector2f itor_vec = *i;
-			this->waypoints.push_back(vertex + itor_vec);
+			sf::Vector2f itor_vec = sf::Vector2f(
+				(*i).x + vertex.x,
+				(*i).y + vertex.y);
+			this->waypoints.push_back(itor_vec);
 		}
 		curr_waypoint = vertex;
 		next_waypoint = waypoints[0];
+		waypoint_idx = 0;
+		setMoveAngle();
 	};
 	std::vector <sf::Vector2f> getWaypoints(){ return waypoints; };
 

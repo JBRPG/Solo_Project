@@ -68,7 +68,7 @@ void Movement::lookupMovement(Entity& entity, std::vector<sf::Vector2f> waypoint
 	*/
 
 	if (entity.getGlobalBounds().contains(next_waypoint) &&
-		waypoint_idx < waypoints.size()){
+		waypoint_idx < waypoints.size() - 1){
 		curr_waypoint = next_waypoint;
 		next_waypoint = waypoints[++waypoint_idx];
 		setMoveAngle();
