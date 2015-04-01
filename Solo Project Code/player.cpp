@@ -97,6 +97,10 @@ void Player::movePlayer(){
 /*
    Since the player has to make bullets, then we need to add the bullets
    to the entity list
+
+   We will add in a Weapon object to represent the weapon currently equipped
+
+
 */
 
 // We will create a bullet entity from the player

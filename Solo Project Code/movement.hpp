@@ -101,10 +101,12 @@ public:
 	{
 		/*
 		  We shall initalize the waypoints based on offset from the vertex
-		  (i.e. waypoint[0] = (10, 10), then this->waypoint[0] = vertex + waypoint[0])
+		  (i.e. _waypoints[0] = (10, 10), then this->waypoints[0] = vertex + _waypoints[0])
 
 		*/
 		for (auto i = _waypoints.begin(); i != _waypoints.end(); ++i){
+			// Add the offset from the waypoint parameter to the vertex
+			// so that can be added to the object's waypoint list
 			sf::Vector2f itor_vec = sf::Vector2f(
 				(*i).x + vertex.x,
 				(*i).y + vertex.y);
