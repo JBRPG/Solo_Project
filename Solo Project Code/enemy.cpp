@@ -7,8 +7,6 @@ void Enemy::update(float dt){
 	// The enemy remains stationary if no movement provided
 	if (this->myMovement != NULL)
 		updateMovement(*myMovement);
-
-	++ticks;
 }
 
 

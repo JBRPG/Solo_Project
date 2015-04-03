@@ -119,6 +119,9 @@ void Player::shootPlayer(float dt){
 
 	if (Input::instance()->pressKeybutton(sf::Keyboard::Space)){
 
+		// Will replace a single bullet with Weapon,
+		// which will take care of the bullet generation
+
 		Bullet* bullet_p = new Bullet(myScene->game->texmgr.getRef("bulletPlayer"),
 			1, 10, false, false, 0.0f);
 

@@ -1,5 +1,15 @@
 #include "bullet.hpp"
 
+
+/*
+For all entity comparisons, we will use dynamic_cast
+with the reference to Entity object - Entity& other
+to keep code cleaner
+
+dynamic_cast to a pointer type returns NULL if the cast fails
+dynamic_cast to a reference type would throw an exception on failure
+*/
+
 void Bullet::collideWith(Entity& other){
 
 	if (Player* player = dynamic_cast<Player*>(&other)){
@@ -33,8 +43,6 @@ void Bullet::update(float dt){
 	// Move the bullet with the given velocity (speed and rotation angle)
 	this->move(speed * cos(this->getRotation() * deg_to_rad),
 		       speed * sin(this->getRotation() * deg_to_rad));
-
-	++ticks;
 
 
 }

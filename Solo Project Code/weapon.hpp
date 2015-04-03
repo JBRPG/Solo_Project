@@ -3,6 +3,12 @@
 #include <SFML/Graphics.hpp>
 
 #include "bullet.hpp"
+#include "sceneGame.hpp"
+
+#include "entity.hpp"
+#include "player.hpp"
+#include "enemy.hpp"
+
 
 /*
   Weapon consist of a collection of bullets
@@ -23,7 +29,9 @@ private:
 	int shootCooldownTime; // general delay time until shooting
 	int shootCooldownSet;  
 
-	int rapidDurationTime; // duration of rapid fire
+	int rapidRate; // How many shots per second
+	int rapidRateSet;
+	int rapidDuration;
 	int rapidDurationSet;
 
 	// Enemy only
@@ -38,14 +46,15 @@ private:
 
 	std::string keyword; // Determines behavior of weapon
 
-	std::vector<Bullet> bullet_list;
+	std::vector<BulletTemplate> bullet_list;
+	bool enemydidShoot;
 
 
 public:
 
 	// Constructors
 
-	Weapon(std::vector <Bullet>, std::string, int, int);
+	Weapon(std::vector <BulletTemplate>, std::string, int, std::vector<int>);
 
 
 
@@ -54,12 +63,15 @@ public:
 
 	void update();
 
+	/*
+	   Look up the name of the specified shot type to
+	   call the specified functions
+	*/
 	void lookupShoot(Entity&, std::string);
 
-	/*
-	    Table functions based on the following parameters
-		1 - Entity&:  need entity to generate the bullets
-		2 - sf::Vector2f:
-		3 - 
-	*/
+
+	void shootBullets(Entity&); // Shoot all bullets at once
+
+
+	void shootBulletSequence(Entity&); // shoot one bullet each in a sequence
 };

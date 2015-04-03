@@ -5,7 +5,7 @@
 
 // Will add more code soon
 void Entity::update(float dt){
-
+	++ticks;
 }
 
  
