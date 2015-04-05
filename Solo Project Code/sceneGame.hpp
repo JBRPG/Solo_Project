@@ -6,11 +6,13 @@
 #include "game.hpp"
 #include "entity.hpp"
 #include "movement.hpp"
+#include "weapon.hpp"
 #include "player.hpp"
 #include "collisionGrid.hpp"
 
-// Test includes
-#include "bullet.hpp"
+// forward declare
+
+class BulletTemplate;
 
 class SceneGame : public Scene{
 private:
@@ -25,7 +27,8 @@ private:
 	sf::Sprite background;
 	Player* player;
 	
-	Enemy* enemy; // temporary variable
+	std::vector<Enemy*> enemies; // temporary variable
+	std::vector <std::vector < BulletTemplate* > > bullet_Patterns;
 
 	// Other important variables
 	collisionGrid gridBox;

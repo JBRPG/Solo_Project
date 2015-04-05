@@ -59,14 +59,9 @@ public:
 	void update(float dt);
 	int getTicks() { return ticks; };
 
-	void shootEnemy(float dt); // Will fire after set time period for now..
-	void moveEnemy(); // Will use movement class to update enemy movement
-	void resetDelay() { shootDelay = delayTime; };
-
-	// I want the enemy to have dynamic movement
-	// I will implement it later
 
 	void updateMovement(Movement&);
+	void updateWeapon(Weapon&);
 
 
 };

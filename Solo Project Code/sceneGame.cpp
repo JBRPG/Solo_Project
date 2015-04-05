@@ -25,6 +25,32 @@ SceneGame::SceneGame(Game* game){
 
 	background = sf::Sprite(this->game->texmgr.getRef("background"));
 
+	// setup the bullet patterns
+
+	// Hardcoded for testing purposes
+	
+	std::vector<BulletTemplate*> player_weapon;
+
+	// Typical 3-way gun
+	player_weapon.push_back(new BulletTemplate("bulletPlayer", 1, 15, false, 0));
+	player_weapon.push_back(new BulletTemplate("bulletPlayer", 1, 15, false, -15));
+	player_weapon.push_back(new BulletTemplate("bulletPlayer", 1, 15, false, 15));
+
+	// simple rapid fire
+
+
+	bullet_Patterns.push_back(player_weapon);
+
+	std::vector<BulletTemplate*> enemy_weapon;
+
+	// 2 shot rapid
+	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, 0));
+
+	bullet_Patterns.push_back(enemy_weapon);
+
+
+
+
 	// Initialize the entities
 
 	// for now we just add in the player and a few enemies
@@ -33,6 +59,7 @@ SceneGame::SceneGame(Game* game){
 	player = new Player(this->game->texmgr.getRef("playerSprite"),
 		1, 5, false, 3);
 	player->setPosition(sf::Vector2f(100, 300));
+	player->setWeapon(new Weapon((bullet_Patterns[0]), "single", 60));
 
 	addEntity(player);
 
@@ -41,32 +68,19 @@ SceneGame::SceneGame(Game* game){
 
 
     // For a simple test, we will add in an enemy
-
-	enemy = new Enemy(this->game->texmgr.getRef("enemySprite"),
+	enemies.push_back(nullptr);
+	enemies[0] = new Enemy(this->game->texmgr.getRef("enemySprite"),
 		1,1,false);
-    enemy->setPosition(sf::Vector2f(400, 400));
-
-	// We will add in a unique movement for the enemy
-	// to make sure it behaves correctly
-
-	/*
-	std::vector <float> argvec = {170.0f, 0.010f};
-
-	enemy->setMovement(new Movement("sine", enemy->getPosition(),
-		argvec));
-
-	*/
-
-	// Now test for waypoint movement 
-
+    enemies[0]->setPosition(sf::Vector2f(400, 400));
+	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "rapid_enemy", 60, {8, 16}));
 	std::vector<sf::Vector2f> waypoints = {
 		sf::Vector2f(-100, 0),
 		sf::Vector2f(-100, -100),
 		sf::Vector2f(0, -100),
 	};
-	enemy->setMovement(new Movement(enemy->getPosition(), waypoints));
+	enemies[0]->setMovement(new Movement(enemies[0]->getPosition(), waypoints));
 
-	addEntity(enemy);
+	addEntity(enemies[0]);
 
 }
 
