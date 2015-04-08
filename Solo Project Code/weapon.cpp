@@ -115,7 +115,7 @@ void Weapon::shootBullet(Entity& shooter, BulletTemplate& bullet){
 		bullet.getSpeed(),
 		bullet.getInvincible(),
 		enemydidShoot,
-		bullet.getRotation());
+		bullet.getRotation() + (180 * enemydidShoot));
 	int shootFlip = enemydidShoot ? -1 : 1;
 	bullet_p->setPosition(shooter.getPosition().x + (shootFlip * shooter.getGlobalBounds().width / 2),
 		shooter.getPosition().y);

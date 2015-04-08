@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "entity.hpp"
 #include "player.hpp"
 #include "bullet.hpp"
@@ -15,12 +18,6 @@ class Enemy : public Entity{
 
 private:
 
-	// From entity
-	//int hp;
-	//float speed;
-	//bool invincible;
-	int shootDelay;
-	const int delayTime = 60;
 	sf::Vector2f spawnVertex;
 
 
@@ -45,6 +42,10 @@ public:
 		Entity(tex, rect, hp, speed, invincible), withGroup{ false }, groupID{ 0 },
 		spawnVertex{ this->getPosition() }
 	{};
+	Enemy(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
+		sf::Vector2f pos, Weapon* weapon, Movement* movement) :
+		Entity(scene, tex, hp, speed, invincible, pos, weapon, movement)
+	{};
 
 	void setWithGroup(bool group) { this->withGroup = group; };
 	bool getWithGroup() { return this->withGroup; };
@@ -63,5 +64,29 @@ public:
 	void updateMovement(Movement&);
 	void updateWeapon(Weapon&);
 
+
+};
+
+class EnemyTemplate {
+private:
+
+	SceneGame* myScene;
+	std::string strTex;
+	int health;
+	float speed;
+	bool invincible;
+	sf::Vector2f spawnPos;
+
+
+public:
+
+	EnemyTemplate(SceneGame*, std::string, int, float, bool, sf::Vector2f){};
+
+	std::string getTex() { return strTex; };
+	int  getHP() { return health; };
+	float  getSpeed() { return speed; };
+	bool  getInvincible() { return invincible; };
+	sf::Vector2f  getSpawnPos() { return spawnPos; };
+	SceneGame* getScene() { return myScene; };
 
 };

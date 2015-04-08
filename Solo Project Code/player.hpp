@@ -26,20 +26,22 @@ private:
 
 public:
 
-	Player(const sf::Texture& tex, int hp, float speed, bool invincibility,
-		int lives) :
-
-
-
-		Entity(tex, hp, speed, invincible)
+	Player(const sf::Texture& tex, int hp, float speed,
+		bool invincibility, int lives) :
+		lives(lives),
+		Entity(tex, hp, speed, invincibility)
 	{};
 
-
 	Player(const sf::Texture& tex, const sf::IntRect& rect, int hp,
-		  float speed, bool invincibility,
-		int lives) :
-
+		  float speed, bool invincibility, int lives) :
+		lives(lives),
 		Entity(tex, rect, hp, speed, invincibility)
+	{};
+
+	Player(std::string tex, int hp, float speed, bool invincibility,
+		int lives, sf::Vector2f pos, Weapon* weapon) :
+		lives(lives),
+		Entity(tex, hp, speed, invincibility, pos, weapon)
 	{};
 
 	void update(float dt);

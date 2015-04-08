@@ -9,6 +9,7 @@
 #include "weapon.hpp"
 #include "player.hpp"
 #include "collisionGrid.hpp"
+#include "spawner.hpp"
 
 // forward declare
 
@@ -34,6 +35,8 @@ private:
 	collisionGrid gridBox;
 	std::vector<Entity*> addList; // We simply add the created entities to EntityList
 	std::vector<Entity*> removeList; // we match the stored entities for removal
+
+	std::vector <Spawner*> spawner_list;
 
 
 public:

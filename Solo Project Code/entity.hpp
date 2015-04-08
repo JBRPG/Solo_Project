@@ -79,6 +79,37 @@ public:
 		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 	};
 
+	// Other constructors
+
+	// for enemy creation
+	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
+		sf::Vector2f pos, Weapon* weapon, Movement* movement):
+		health(hp), speed(speed), invincible(invincible), myWeapon(weapon), myMovement(movement)
+	{
+		this->myScene->game->texmgr.getRef(tex);
+		this->setPosition(pos);
+	};
+
+	// for player creation
+	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
+		sf::Vector2f pos, Weapon* weapon) :
+		health(hp), speed(speed), invincible(invincible), myWeapon(weapon)
+	{
+		this->myScene->game->texmgr.getRef(tex);
+		this->setPosition(pos);
+	};
+
+	// for bullet
+	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
+		sf::Vector2f pos) :
+		health(hp), speed(speed), invincible(invincible)
+	{
+		this->myScene->game->texmgr.getRef(tex);
+		this->setPosition(pos);
+	};
+
+
+
 	// Member functions
 
 	virtual void update(float dt);

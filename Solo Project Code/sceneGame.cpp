@@ -44,11 +44,29 @@ SceneGame::SceneGame(Game* game){
 	std::vector<BulletTemplate*> enemy_weapon;
 
 	// 2 shot rapid
-	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, 0));
+	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, -5));
+	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, 5));
 
 	bullet_Patterns.push_back(enemy_weapon);
 
 
+	// initalize Movement
+
+	std::vector<sf::Vector2f> waypoints = {
+		sf::Vector2f(-100, 0),
+		sf::Vector2f(-100, -100),
+		sf::Vector2f(0, -100),
+	};
+
+	Movement* enemy_movement = new Movement(sf::Vector2f (400, 400),waypoints);
+
+	std::vector <int> spawnParams = { 60 };
+	// Initalize the spawner
+	spawner_list.push_back(new Spawner(
+		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
+		enemy_movement,
+		EnemyTemplate(this,"enemySprite",1, 2, false,
+		sf::Vector2f(400, 400)), spawnParams));
 
 
 	// Initialize the entities
@@ -64,23 +82,32 @@ SceneGame::SceneGame(Game* game){
 	addEntity(player);
 
 
-	// We will fill in other things later
+	/*
 
-
-    // For a simple test, we will add in an enemy
+    // For a simple test, we will add in a few enemies
 	enemies.push_back(nullptr);
 	enemies[0] = new Enemy(this->game->texmgr.getRef("enemySprite"),
 		1,1,false);
     enemies[0]->setPosition(sf::Vector2f(400, 400));
-	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "rapid_enemy", 60, {8, 16}));
-	std::vector<sf::Vector2f> waypoints = {
-		sf::Vector2f(-100, 0),
-		sf::Vector2f(-100, -100),
-		sf::Vector2f(0, -100),
-	};
-	enemies[0]->setMovement(new Movement(enemies[0]->getPosition(), waypoints));
+	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, {8}));
+
+	enemies[0]->setMovement(enemy_movement);
+
+
 
 	addEntity(enemies[0]);
+
+	enemies.push_back(nullptr);
+	enemies[1] = new Enemy(this->game->texmgr.getRef("enemySprite"),
+		1, 1, false);
+	enemies[1]->setPosition(sf::Vector2f(400, 300));
+	enemies[1]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, { 8 }));
+
+	enemies[1]->setMovement(enemy_movement);
+
+	addEntity(enemies[1]);
+
+	//*/
 
 }
 
@@ -102,6 +129,10 @@ void SceneGame::draw(float dt){
 }
 
 void SceneGame::update(float dt){
+
+	for (auto spawn : spawner_list){
+		spawn->update();
+	}
 
 	///update the entities inside the current EntityList
 	for (int i = 0; i < getEntitysize(); ++i){

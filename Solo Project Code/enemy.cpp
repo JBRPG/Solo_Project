@@ -50,3 +50,8 @@ void Enemy::destroyEnemy(){
 	myScene->addEntity(explode); // you have to actually add the entity because
 	                             // storeAdded list has already been checked during update
 }
+
+EnemyTemplate::EnemyTemplate(SceneGame* scene, std::string tex, int hp, float _speed, bool invincible, sf::Vector2f pos):
+myScene(scene), strTex(tex), health(hp), speed(_speed), invincible(invincible), spawnPos(pos)
+
+{}
