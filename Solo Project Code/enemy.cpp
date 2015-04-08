@@ -2,7 +2,7 @@
 
 
 void Enemy::update(float dt){
-	updateWeapon(*myWeapon);
+	shootEnemy(dt);
 
 	// The enemy remains stationary if no movement provided
 	if (this->myMovement != NULL)
@@ -15,8 +15,22 @@ void Enemy::updateMovement(Movement& entityMove){
 	entityMove.update(*this);
 }
 
-void Enemy::updateWeapon(Weapon& weapon){
-	weapon.update(*this);
+void Enemy::shootEnemy(float dt){
+	shootDelay --;
+
+	if (shootDelay <= 0){
+
+		Bullet* bullet_p = new Bullet(myScene->game->texmgr.getRef("bulletEnemy"),
+			1, 10, false, true, 180.0f);
+
+
+		bullet_p->setPosition(this->getPosition().x - this->getGlobalBounds().width / 2,
+			this->getPosition().y);
+		myScene->storeAddedEntity(bullet_p);
+		bullet_p->setEnemyShot(true);
+
+		resetDelay();
+	}
 }
 
 void Enemy::collideWith(Entity &other){

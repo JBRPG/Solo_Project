@@ -16,8 +16,6 @@ class SceneGame;
 
 class Movement;
 
-class Weapon;
-
 
 class Entity : public sf::Sprite{
 
@@ -33,7 +31,7 @@ protected:
 
 	SceneGame *myScene;
 	Movement *myMovement;
-	Weapon *myWeapon;
+
 
 	std::vector <float> moveArgs;
 
@@ -120,7 +118,6 @@ public:
 	// can be called with unique code
 	virtual void collideWith(Entity&) = 0;
 	virtual void updateMovement(Movement&) = 0;
-	virtual void updateWeapon(Weapon&) = 0;
 
    
 	void setHealth(int hp) { this -> health = hp; };
@@ -135,9 +132,6 @@ public:
 
 	void setMovement(Movement* movement) { myMovement = movement; };
 	Movement* getMovement() { return myMovement; };
-
-	void setWeapon(Weapon* weapon) { myWeapon = weapon; };
-	Weapon* getWeapon(){ return myWeapon; };
 
 
 

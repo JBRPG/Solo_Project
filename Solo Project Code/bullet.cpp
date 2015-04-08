@@ -41,8 +41,8 @@ void Bullet::update(float dt){
 	float deg_to_rad = pi / 180.0f;
 
 	// Move the bullet with the given velocity (speed and rotation angle)
-	this->move(speed * cos(rotation * deg_to_rad),
-		       speed * sin(rotation * deg_to_rad));
+	this->move(speed * cos(this->getRotation() * deg_to_rad),
+		       speed * sin(this->getRotation() * deg_to_rad));
 
 
 }

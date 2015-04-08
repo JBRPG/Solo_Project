@@ -28,7 +28,7 @@ SceneGame::SceneGame(Game* game){
 	// setup the bullet patterns
 
 	// Hardcoded for testing purposes
-	
+
 	std::vector<BulletTemplate*> player_weapon;
 
 	// Typical 3-way gun
@@ -58,14 +58,14 @@ SceneGame::SceneGame(Game* game){
 		sf::Vector2f(0, -100),
 	};
 
-	Movement* enemy_movement = new Movement(sf::Vector2f (400, 400),waypoints);
+	Movement* enemy_movement = new Movement(sf::Vector2f(400, 400), waypoints);
 
 	std::vector <int> spawnParams = { 60 };
 	// Initalize the spawner
 	spawner_list.push_back(new Spawner(
 		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
 		enemy_movement,
-		EnemyTemplate(this,"enemySprite",1, 2, false,
+		EnemyTemplate(this, "enemySprite", 1, 2, false,
 		sf::Vector2f(400, 400)), spawnParams));
 
 
@@ -83,30 +83,21 @@ SceneGame::SceneGame(Game* game){
 
 
 	/*
-
-    // For a simple test, we will add in a few enemies
+	// For a simple test, we will add in a few enemies
 	enemies.push_back(nullptr);
 	enemies[0] = new Enemy(this->game->texmgr.getRef("enemySprite"),
-		1,1,false);
-    enemies[0]->setPosition(sf::Vector2f(400, 400));
+	1,1,false);
+	enemies[0]->setPosition(sf::Vector2f(400, 400));
 	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, {8}));
-
 	enemies[0]->setMovement(enemy_movement);
-
-
-
 	addEntity(enemies[0]);
-
 	enemies.push_back(nullptr);
 	enemies[1] = new Enemy(this->game->texmgr.getRef("enemySprite"),
-		1, 1, false);
+	1, 1, false);
 	enemies[1]->setPosition(sf::Vector2f(400, 300));
 	enemies[1]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, { 8 }));
-
 	enemies[1]->setMovement(enemy_movement);
-
 	addEntity(enemies[1]);
-
 	//*/
 
 }

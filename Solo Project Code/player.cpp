@@ -94,11 +94,45 @@ void Player::movePlayer(){
 	}
 }
 
+/*
+   Since the player has to make bullets, then we need to add the bullets
+   to the entity list
+
+   We will add in a Weapon object to represent the weapon currently equipped
+
+
+*/
+
+// We will create a bullet entity from the player
+// Will have delay period between each shot
+
 
 void Player::shootPlayer(float dt){
 
-	myWeapon->update(*this);
+	// we reduce time for shoot delay
 
+	shootDelay --;
+
+	if (shootDelay > 0) return;
+
+	
+
+	if (Input::instance()->pressKeybutton(sf::Keyboard::Space)){
+
+		// Will replace a single bullet with Weapon,
+		// which will take care of the bullet generation
+
+		Bullet* bullet_p = new Bullet(myScene->game->texmgr.getRef("bulletPlayer"),
+			1, 10, false, false, 0.0f);
+
+
+		bullet_p->setPosition(this->getPosition().x + this->getGlobalBounds().width/2,
+			this->getPosition().y);
+		myScene->storeAddedEntity(bullet_p);
+		bullet_p->setEnemyShot(false);
+
+		resetDelay();
+	}
 }
 
 void Player::checkHealthPlayer(){
