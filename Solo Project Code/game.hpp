@@ -19,7 +19,6 @@ public:
 	std::stack<Scene*> scenes;
 
 	sf::RenderWindow window;
-	TextureManager texmgr;
 
 	void pushScene(Scene* scene);
 	void popScene();

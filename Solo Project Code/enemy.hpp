@@ -47,6 +47,8 @@ public:
 		Entity(scene, tex, hp, speed, invincible, pos, weapon, movement)
 	{};
 
+	Enemy();
+
 	void setWithGroup(bool group) { this->withGroup = group; };
 	bool getWithGroup() { return this->withGroup; };
 
@@ -60,14 +62,9 @@ public:
 	void update(float dt);
 	int getTicks() { return ticks; };
 
-	void shootEnemy(float dt); // Will fire after set time period for now..
-	void moveEnemy(); // Will use movement class to update enemy movement
-	void resetDelay() { shootDelay = delayTime; };
-
-	// I want the enemy to have dynamic movement
-	// I will implement it later
 
 	void updateMovement(Movement&);
+	void updateWeapon(Weapon&);
 
 
 };
@@ -85,7 +82,7 @@ private:
 
 public:
 
-	EnemyTemplate(SceneGame*, std::string, int, float, bool, sf::Vector2f){};
+	EnemyTemplate(SceneGame*, std::string, int, float, bool, sf::Vector2f);
 
 	std::string getTex() { return strTex; };
 	int  getHP() { return health; };
@@ -93,5 +90,7 @@ public:
 	bool  getInvincible() { return invincible; };
 	sf::Vector2f  getSpawnPos() { return spawnPos; };
 	SceneGame* getScene() { return myScene; };
+
+	~EnemyTemplate();
 
 };

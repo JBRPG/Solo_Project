@@ -8,23 +8,131 @@
 
 
 */
-Weapon::Weapon(std::vector <BulletTemplate> bullets, std::string key_name, int delay, std::vector<int> key_params) :
+Weapon::Weapon(std::vector <BulletTemplate*> bullets, std::string key_name, int delay, std::vector<int> key_params) :
 bullet_list(bullets), keyword(key_name), shootCooldownSet(delay)
 {
-	if (keyword == "rapid_player" || keyword == "rapid_enemy"){
-		rapidRateSet = key_params[0];
-		rapidDurationSet = key_params[1];
-	}
 
-	if (keyword == "hold_player") holdDurationSet = key_params[0];
+	// If none of the other keywords match, the program will close
 
-	if (keyword == "sequence_enemy") sequenceDelaySet = key_params[0];
+		if (keyword == "rapid_player" || keyword == "rapid_enemy"){
+			rapidWaitSet = key_params[0];
+			rapidDurationSet = key_params[1];
+			return;
+		}
+
+		if (keyword == "hold_player"){
+			holdDurationSet = key_params[0];
+			return;
+		}
+
+		if (keyword == "sequence_enemy"){
+			sequenceDelaySet = key_params[0];
+			return;
+		}
+		exit(1);
 }
 
+Weapon::Weapon(std::vector <BulletTemplate*> bullets, std::string key_name, int delay) :
+bullet_list(bullets), keyword(key_name), shootCooldownSet(delay)
+{
+
+	if (keyword != "single") {
+		exit(1);
+	}
+}
+
+// copy constructor
+Weapon::Weapon(const Weapon& source){
+
+	shootCooldownSet = source.shootCooldownSet;
+	rapidWaitSet = source.rapidWaitSet;
+	rapidDurationSet = source.rapidDurationSet;
+	sequenceDelaySet = source.sequenceDelaySet;
+	sequence_idx = source.sequence_idx;
+	holdDurationSet = source.holdDurationSet;
+	spawnTime = source.spawnTime;
+	keyword = source.keyword; 
+	enemydidShoot = source.enemydidShoot;
+
+	//bullet_list = source.bullet_list;
+
+	for (auto bullet : source.bullet_list){
+		bullet_list.push_back(new BulletTemplate(*bullet));
+	}
+
+}
+
+// assignment operator
+Weapon& Weapon::operator=(const Weapon& source){
+	// self checking
+	if (this == &source) return *this;
+
+	// first delete dynamic objects
+
+	for (auto bullet : bullet_list){
+		delete bullet;
+	}
+	bullet_list.clear();
+
+	// then initalize
+
+	///*
+	shootCooldownSet = source.shootCooldownSet;
+	rapidWaitSet = source.rapidWaitSet;
+	rapidDurationSet = source.rapidDurationSet;
+	sequenceDelaySet = source.sequenceDelaySet;
+	sequence_idx = source.sequence_idx;
+	holdDurationSet = source.holdDurationSet;
+	spawnTime = source.spawnTime;
+	keyword = source.keyword;
+	enemydidShoot = source.enemydidShoot;
+
+	//bullet_list = source.bullet_list;
+
+	for (auto bullet : source.bullet_list){
+		bullet_list.push_back(new BulletTemplate(*bullet));
+	}
+
+	//*/
+
+	return *this;
+}
+
+
+
+void Weapon::update(Entity& shooter){
+
+	lookupShoot(shooter, this->keyword);
+
+}
+
+void Weapon::lookupShoot(Entity& shooter, std::string name){
+
+	static std::map < std::string, void (Weapon::*)(Entity&) > table
+	{
+		{ "single", &Weapon::singleShot},
+		{ "rapid_player", &Weapon::rapidPlayer},
+		{ "rapid_enemy", &Weapon::rapidEnemy },
+		{ "hold_player", &Weapon::holdPlayer },
+		{ "sequence_enemy", &Weapon::sequenceEnemy }
+	};
+
+	auto entry = table.find(name);
+	if (entry != table.end()){
+		(this->*(entry->second)) (shooter);
+	}
+	else {
+
+		std::cerr << "Cannot find movement with the name " << name << std::endl;
+		std::exit(1);
+	}
+
+}
 
 // When an entity shoots bullets, we will find out if its a player or enemy
 // to determine who shot them
 
+// Shoot all bullets at once
 void Weapon::shootBullets(Entity& shooter){
 	
 	if (Enemy* enemy = dynamic_cast<Enemy*> (&shooter)){
@@ -35,20 +143,19 @@ void Weapon::shootBullets(Entity& shooter){
 	}
 
 	for (auto bullet_data : bullet_list){
-		Bullet* bullet_p = new Bullet(shooter.getScene()->
-			game->texmgr.getRef(bullet_data.getTex()),
-			bullet_data.getHP(),
-			bullet_data.getSpeed(),
-			bullet_data.getInvincible(),
+		Bullet* bullet_p = new Bullet(
+			TextureManager::instance()->getRef(bullet_data->getTex()),
+			bullet_data->getHP(),
+			bullet_data->getSpeed(),
+			bullet_data->getInvincible(),
 			enemydidShoot,
-			bullet_data.getRotation() + (180 * enemydidShoot));
+			bullet_data->getRotation() + (180 * enemydidShoot));
 		int shootFlip = enemydidShoot ? -1 : 1;
 		bullet_p->setPosition(shooter.getPosition().x + (shootFlip * shooter.getGlobalBounds().width / 2),
 			shooter.getPosition().y);
 		shooter.getScene()->storeAddedEntity(bullet_p);
 	}
 
-<<<<<<< HEAD
 }
 
 // Shoot a single bullet
@@ -61,7 +168,7 @@ void Weapon::shootBullet(Entity& shooter, BulletTemplate& bullet){
 	}
 
 	Bullet* bullet_p = new Bullet(
-		shooter.getScene()->game->texmgr.getRef(bullet.getTex()),
+		TextureManager::instance()->getRef(bullet.getTex()),
 		bullet.getHP(),
 		bullet.getSpeed(),
 		bullet.getInvincible(),
@@ -187,6 +294,4 @@ void Weapon::sequenceEnemy(Entity& shooter){
 			sequenceFire(shooter);
 	}
 	else shootCooldownTime--;
-=======
->>>>>>> parent of 8ecfb12... Weapon Class Finished
 }

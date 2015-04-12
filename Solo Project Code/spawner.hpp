@@ -4,11 +4,11 @@
 
 #include "weapon.hpp"
 #include "movement.hpp"
-#include "enemy.hpp"
-#include "bullet.hpp"
 
-// Forward declare
 
+// forward declare
+
+class EnemyTemplate;
 
 /*
    Spawner will create enemies and/or power ups
@@ -35,7 +35,7 @@ private:
 	// If you plan to spawn finite enemies, then use constructor
 	int spawnLimit = -1;
 
-	EnemyTemplate enemyData;
+	EnemyTemplate* enemyData;
 	Weapon* givenWeapon;
 	Movement* givenMovement;
 
@@ -45,11 +45,17 @@ private:
 
 public:
 
-	Spawner(Weapon*, Movement*, EnemyTemplate, std::vector <int>);
+	Spawner(Weapon*, Movement*, EnemyTemplate*, std::vector <int>);
 
 	void update();
 	void spawn_enemy();
 	void spawn_count();
+
+	~Spawner(){
+		delete givenWeapon;
+		delete givenMovement;
+		delete enemyData;
+	};
 
 
 };

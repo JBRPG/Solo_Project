@@ -41,7 +41,7 @@ private:
 
 public:
 	SceneGame(Game* game);
-	SceneGame() {}; // dummy constructor to get rid of compiler errors
+	//SceneGame() {}; // dummy constructor to get rid of compiler errors
 
 	// Scene functions
 	virtual void draw(float dt);

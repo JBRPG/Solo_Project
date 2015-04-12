@@ -2,6 +2,14 @@
 
 #include <SFML\Graphics.hpp>
 
+#include <string>
+#include <vector>
+
+#include "textureManager.hpp"
+
+//#include "sceneGame.hpp"
+
+
 /*
    Entity inherits all public and protected data and functions from
    Sprite class. Sprite inherits from both Drawable and Transformable.
@@ -15,6 +23,8 @@
 class SceneGame;
 
 class Movement;
+
+class Weapon;
 
 
 class Entity : public sf::Sprite{
@@ -31,7 +41,7 @@ protected:
 
 	SceneGame *myScene;
 	Movement *myMovement;
-
+	Weapon *myWeapon;
 
 	std::vector <float> moveArgs;
 
@@ -79,34 +89,52 @@ public:
 
 	// Other constructors
 
+	/*
+
+	// for enemy creation
+	Entity(SceneGame*, std::string, int, float, bool,
+		sf::Vector2f, Weapon*, Movement*);
+
+	// for player creation
+	Entity(SceneGame*, std::string, int, float, bool,
+		sf::Vector2f, Weapon*);
+
+	// for bullet
+	Entity(SceneGame*, std::string, int, float, bool,
+		sf::Vector2f);
+
+	//*/
+
+
+	//*
 	// for enemy creation
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
-		sf::Vector2f pos, Weapon* weapon, Movement* movement):
-		health(hp), speed(speed), invincible(invincible), myWeapon(weapon), myMovement(movement)
+		sf::Vector2f pos, Weapon* weapon, Movement* movement) :
+		myScene(scene), health(hp), speed(speed), invincible(invincible), myWeapon(weapon), myMovement(movement)
 	{
-		this->myScene->game->texmgr.getRef(tex);
+		TextureManager::instance()->getRef(tex);
 		this->setPosition(pos);
 	};
 
 	// for player creation
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
 		sf::Vector2f pos, Weapon* weapon) :
-		health(hp), speed(speed), invincible(invincible), myWeapon(weapon)
+		myScene(scene), health(hp), speed(speed), invincible(invincible), myWeapon(weapon)
 	{
-		this->myScene->game->texmgr.getRef(tex);
+		TextureManager::instance()->getRef(tex);
 		this->setPosition(pos);
 	};
 
 	// for bullet
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
 		sf::Vector2f pos) :
-		health(hp), speed(speed), invincible(invincible)
+		myScene(scene), health(hp), speed(speed), invincible(invincible)
 	{
-		this->myScene->game->texmgr.getRef(tex);
+		TextureManager::instance()->getRef(tex);
 		this->setPosition(pos);
 	};
 
-
+	//*/
 
 	// Member functions
 
@@ -118,6 +146,7 @@ public:
 	// can be called with unique code
 	virtual void collideWith(Entity&) = 0;
 	virtual void updateMovement(Movement&) = 0;
+	virtual void updateWeapon(Weapon&) = 0;
 
    
 	void setHealth(int hp) { this -> health = hp; };
@@ -132,6 +161,9 @@ public:
 
 	void setMovement(Movement* movement) { myMovement = movement; };
 	Movement* getMovement() { return myMovement; };
+
+	void setWeapon(Weapon* weapon) { myWeapon = weapon; };
+	Weapon* getWeapon(){ return myWeapon; };
 
 
 

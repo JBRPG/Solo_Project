@@ -47,10 +47,10 @@ public:
     // After short time from being on screen, remove the entity
 	void checkExplosion();
 
-	// We will keep the collision function empty for simplicity
+    // We will leave the inherited functions empty for simplicity
 	void collideWith(Entity&) {};
-
-	// We will keep the movement empty for simplicity
 	void updateMovement(Movement&) {};
+	void updateWeapon(Weapon&) {};
+	
 
 };

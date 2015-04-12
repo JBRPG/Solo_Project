@@ -41,8 +41,33 @@ void Bullet::update(float dt){
 	float deg_to_rad = pi / 180.0f;
 
 	// Move the bullet with the given velocity (speed and rotation angle)
-	this->move(speed * cos(this->getRotation() * deg_to_rad),
-		       speed * sin(this->getRotation() * deg_to_rad));
+	this->move(speed * cos(rotation * deg_to_rad),
+		       speed * sin(rotation * deg_to_rad));
 
 
+}
+
+// bullet template section
+
+BulletTemplate::BulletTemplate(const BulletTemplate& source){
+	// shallow copy-able
+	texString = source.texString;
+	hp = source.hp;
+	speed = source.speed;
+	invincibility = source.invincibility;
+	rotation = source.rotation;
+}
+
+// overloaded assignment operator
+BulletTemplate& BulletTemplate::operator= (const BulletTemplate& source){
+	// self assignment check
+	if (this == &source) return *this;
+
+	texString = source.texString;
+	hp = source.hp;
+	speed = source.speed;
+	invincibility = source.invincibility;
+	rotation = source.rotation;
+
+	return *this;
 }

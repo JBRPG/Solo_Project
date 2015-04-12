@@ -69,12 +69,16 @@
 class Movement {
 
 private:
+
+	// constructor parameters
 	std::vector<float> args;
 	std::string name;
 	
 	sf::Vector2f vertex;
 
 	std::vector <sf::Vector2f> waypoints;
+
+	// other variables
 	int waypoint_idx;
 
 	sf::Vector2f curr_waypoint, next_waypoint;
@@ -117,6 +121,12 @@ public:
 		waypoint_idx = 0;
 		setMoveAngle();
 	};
+
+	// copy constructor
+	Movement(const Movement&);
+
+	// overloaded assignment operator
+	Movement& operator= (const Movement&);
 
 
 	// functions
@@ -165,4 +175,29 @@ public:
 
 
 
+};
+
+// Why do I need to have templates if I can do a deep copy constructor?
+
+class MovementTemplate{
+private:
+	sf::Vector2f vertex;
+	std::string name;
+	std::vector <float> args;
+	std::vector<sf::Vector2f> waypoints;
+
+public:
+
+	MovementTemplate(std::string name, sf::Vector2f vertex, std::vector<float> args):
+		name(name), vertex(vertex), args(args)
+	{};
+
+	MovementTemplate(sf::Vector2f vertex, std::vector<sf::Vector2f> waypoints):
+		vertex(vertex), waypoints(waypoints)
+	{};
+
+	sf::Vector2f getVertex() { return vertex; };
+	std::string getName(){ return name; };
+	std::vector <float> getArgs() { return args; };
+	std::vector<sf::Vector2f> getWaypoints() { return waypoints; };
 };

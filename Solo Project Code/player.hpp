@@ -22,22 +22,6 @@ private:
 	unsigned int score = 0;
 	float spawnTime = 5.0f;
 	unsigned int lives;
-	// Powerups ?
-	// Weapons ?
-
-	int delaySet = 10;
-	int shootDelay = delaySet;
-	//float prevTime = 0.0f;
-
-
-	
-	// From entity
-	//int hp;
-	//float speed;
-	//bool invincibility;
-
-	// other classes
-
 
 
 public:
@@ -54,10 +38,10 @@ public:
 		Entity(tex, rect, hp, speed, invincibility)
 	{};
 
-	Player(std::string tex, int hp, float speed, bool invincibility,
+	Player(SceneGame* scene, std::string tex, int hp, float speed, bool invincibility,
 		int lives, sf::Vector2f pos, Weapon* weapon) :
 		lives(lives),
-		Entity(tex, hp, speed, invincibility, pos, weapon)
+		Entity(scene, tex, hp, speed, invincibility, pos, weapon)
 	{};
 
 	void update(float dt);
@@ -72,10 +56,13 @@ public:
 	void shootPlayer(float dt);
 	void checkHealthPlayer();
 
-	void resetDelay() { shootDelay = delaySet; };
 
 	// empty functions
 
 	void updateMovement(Movement&) {};
+
+	// Leave it empty for now, will implement it later
+	void updateWeapon(Weapon&) {};
+
 
 };

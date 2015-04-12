@@ -74,7 +74,7 @@ void Game::loadTextures(){
 
 		while (std::getline(target_file, current_line)){
 			std::vector<std::string> elems = Game::split(current_line, ", ");
-			texmgr.loadTexture(elems.at(0), elems.at(1));
+			TextureManager::instance()->loadTexture(elems.at(0), elems.at(1));
 		}
 		target_file.close();
 	}

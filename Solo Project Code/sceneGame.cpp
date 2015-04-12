@@ -23,7 +23,7 @@ SceneGame::SceneGame(Game* game){
 
 	// Initialize the background
 
-	background = sf::Sprite(this->game->texmgr.getRef("background"));
+	background = sf::Sprite(TextureManager::instance()->getRef("background"));
 
 	// setup the bullet patterns
 
@@ -58,15 +58,18 @@ SceneGame::SceneGame(Game* game){
 		sf::Vector2f(0, -100),
 	};
 
-	Movement* enemy_movement = new Movement(sf::Vector2f(400, 400), waypoints);
+	//Movement* enemy_movement = new Movement(sf::Vector2f(400, 400), waypoints);
 
+	///*
 	std::vector <int> spawnParams = { 60 };
 	// Initalize the spawner
 	spawner_list.push_back(new Spawner(
 		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
-		enemy_movement,
-		EnemyTemplate(this, "enemySprite", 1, 2, false,
+		new Movement(sf::Vector2f(400, 400), waypoints),
+		new EnemyTemplate(this, "enemySprite", 1, 2, false,
 		sf::Vector2f(400, 400)), spawnParams));
+
+	//*/
 
 
 	// Initialize the entities
@@ -74,9 +77,9 @@ SceneGame::SceneGame(Game* game){
 	// for now we just add in the player and a few enemies
 	// hardcoded until we make use of the random generator
 
-	player = new Player(this->game->texmgr.getRef("playerSprite"),
+	player = new Player(TextureManager::instance()->getRef("playerSprite"),
 		1, 5, false, 3);
-	player->setPosition(sf::Vector2f(100, 300));
+	player->setPosition(sf::Vector2f(100, 200));
 	player->setWeapon(new Weapon((bullet_Patterns[0]), "single", 60));
 
 	addEntity(player);
@@ -85,16 +88,17 @@ SceneGame::SceneGame(Game* game){
 	/*
 	// For a simple test, we will add in a few enemies
 	enemies.push_back(nullptr);
-	enemies[0] = new Enemy(this->game->texmgr.getRef("enemySprite"),
+	enemies[0] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
 	1,1,false);
 	enemies[0]->setPosition(sf::Vector2f(400, 400));
 	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, {8}));
 	enemies[0]->setMovement(enemy_movement);
 	addEntity(enemies[0]);
+	//*
 	enemies.push_back(nullptr);
-	enemies[1] = new Enemy(this->game->texmgr.getRef("enemySprite"),
+	enemies[1] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
 	1, 1, false);
-	enemies[1]->setPosition(sf::Vector2f(400, 300));
+	enemies[1]->setPosition(sf::Vector2f(400, 350));
 	enemies[1]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, { 8 }));
 	enemies[1]->setMovement(enemy_movement);
 	addEntity(enemies[1]);

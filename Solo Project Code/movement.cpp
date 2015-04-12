@@ -1,6 +1,49 @@
 #include "movement.hpp"
 #include <cmath>
 
+
+// constructors
+
+Movement::Movement(const Movement& source){
+	
+	// All of the arguments are copyable at shallow level
+	name = source.name;
+	waypoints = source.waypoints;
+	args = source.args;
+
+	waypoint_idx = source.waypoint_idx;
+
+	curr_waypoint = source.curr_waypoint;
+	next_waypoint = source.next_waypoint;
+	move_angle = source.move_angle;
+
+}
+
+// overloaded assignment operator
+Movement& Movement::operator=(const Movement& source){
+	// check for self assignment
+	if ( this == &source) return *this;
+
+	// All of the arguments are copyable at shallow level
+	///*
+	name = source.name;
+	waypoints = source.waypoints;
+	args = source.args;
+
+	waypoint_idx = source.waypoint_idx;
+
+	curr_waypoint = source.curr_waypoint;
+	next_waypoint = source.next_waypoint;
+	move_angle = source.move_angle;
+
+	//*/
+
+
+
+	return *this;
+
+}
+
 // might end up trying to make the parameter a pointer
 // if it fixes the inheritence value problem
 // which entity& has the data from its subclass, but returns 0

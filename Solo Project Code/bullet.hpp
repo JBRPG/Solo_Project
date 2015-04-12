@@ -31,15 +31,17 @@ public:
 
 	Bullet(const sf::Texture& tex, int hp, float speed, bool invincibility,
 		bool enemyShot, float rot) :
-		rotation{ rot }, enemyShot(enemyShot),
+		rotation(rot), enemyShot(enemyShot),
 		Entity(tex, hp, speed, invincibility)
 	{};
 
 	Bullet(const sf::Texture& tex, const sf::IntRect& rect, int hp, float speed, bool invincibility,
 		bool enemyShot, float rot) :
-		rotation{ rot }, enemyShot(enemyShot),
+		rotation(rot), enemyShot(enemyShot),
 		Entity(tex, rect, hp, speed, invincibility)
 	{};
+
+
 
 	// member functions
 
@@ -56,6 +58,9 @@ public:
 
 	// For now, we leave the updateMovement empty
 	void updateMovement(Movement&) {};
+
+	// We will leave this function empty
+	void updateWeapon(Weapon&) {};
 
 	
 };
@@ -83,6 +88,13 @@ public:
 	BulletTemplate(std::string tex, int _hp, float _speed, bool invinc, float rot):
 	texString(tex), hp(_hp), speed(_speed), invincibility(invinc), rotation(rot)
 	{};
+	BulletTemplate();
+
+	// copy constructor
+	BulletTemplate(const BulletTemplate&);
+
+	// overloaded assignment operator
+	BulletTemplate& operator=(const BulletTemplate&);
 
 	std::string getTex() { return texString; };
 	int getHP() { return hp; };

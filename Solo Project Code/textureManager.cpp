@@ -1,5 +1,13 @@
 #include "textureManager.hpp"
 
+
+TextureManager* TextureManager::p_instance = 0;
+
+TextureManager* TextureManager::instance(){
+	if (!p_instance)
+		p_instance = new TextureManager;
+	return p_instance;
+}
 void TextureManager::loadTexture(const std::string& name, const std::string& filename){
 
 	// Load texture
