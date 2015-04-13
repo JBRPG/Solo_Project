@@ -44,7 +44,7 @@ public:
 	{};
 	Enemy(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
 		sf::Vector2f pos, Weapon* weapon, Movement* movement) :
-		spawnVertex(pos),
+		spawnVertex(pos), withGroup{ false }, groupID{ 0 },
 		Entity(scene, tex, hp, speed, invincible, pos, weapon, movement)
 	{};
 

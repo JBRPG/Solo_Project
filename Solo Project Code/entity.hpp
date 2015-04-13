@@ -110,27 +110,30 @@ public:
 	// for enemy creation
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
 		sf::Vector2f pos, Weapon* weapon, Movement* movement) :
-		myScene(scene), health(hp), speed(speed), invincible(invincible), myWeapon(weapon), myMovement(movement)
+		myScene(scene), health(hp), speed(speed), invincible(invincible), myWeapon(weapon), myMovement(movement),
+		Sprite(TextureManager::instance()->getRef(tex))
 	{
-		TextureManager::instance()->getRef(tex);
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 		this->setPosition(pos);
 	};
 
 	// for player creation
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
 		sf::Vector2f pos, Weapon* weapon) :
-		myScene(scene), health(hp), speed(speed), invincible(invincible), myWeapon(weapon)
+		myScene(scene), health(hp), speed(speed), invincible(invincible), myWeapon(weapon),
+		Sprite(TextureManager::instance()->getRef(tex))
 	{
-		TextureManager::instance()->getRef(tex);
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 		this->setPosition(pos);
 	};
 
 	// for bullet
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
 		sf::Vector2f pos) :
-		myScene(scene), health(hp), speed(speed), invincible(invincible)
+		myScene(scene), health(hp), speed(speed), invincible(invincible),
+		Sprite(TextureManager::instance()->getRef(tex))
 	{
-		TextureManager::instance()->getRef(tex);
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 		this->setPosition(pos);
 	};
 

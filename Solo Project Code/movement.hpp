@@ -157,6 +157,7 @@ public:
 		setMoveAngle();
 	};
 	std::vector <sf::Vector2f> getWaypoints(){ return waypoints; };
+	sf::Vector2f getVertex() { return vertex; };
 
 
 	void lookupMovement(Entity&, std::string);

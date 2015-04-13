@@ -60,16 +60,16 @@ SceneGame::SceneGame(Game* game){
 		sf::Vector2f(0, -100),
 	};
 
-	//Movement* enemy_movement = new Movement(sf::Vector2f(400, 400), waypoints);
+	Movement* enemy_movement = new Movement(sf::Vector2f(400, 400), waypoints);
 
 	///*
 	std::vector <int> spawnParams = { 60 };
 	// Initalize the spawner
 	spawner_list.push_back(new Spawner(
 		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
-		new Movement(sf::Vector2f(400, 400), waypoints),
+		new Movement(enemy_movement->getVertex(), waypoints),
 		new EnemyTemplate(this, "enemySprite", 1, 2, false,
-		sf::Vector2f(400, 400)), spawnParams));
+		enemy_movement->getVertex()), spawnParams));
 
 	//*/
 
@@ -89,14 +89,20 @@ SceneGame::SceneGame(Game* game){
 
 	/*
 	// For a simple test, we will add in a few enemies
-	enemies.push_back(nullptr);
-	enemies[0] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
+	//enemies.push_back(nullptr);
+	/*enemies[0] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
 	1,1,false);
-	enemies[0]->setPosition(sf::Vector2f(400, 400));
+	enemies[0]->setPosition(sf::Vector2f(500, 500));
 	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, {8}));
 	enemies[0]->setMovement(enemy_movement);
+
 	addEntity(enemies[0]);
-	//*
+
+	enemies[0] = new Enemy(this, "enemySprite", 1, 1, false, sf::Vector2f(500, 500),
+		new Weapon(bullet_Patterns[1], "sequence_enemy", 60, { 8 }),
+		enemy_movement);
+	addEntity(enemies[0]);
+	/*
 	enemies.push_back(nullptr);
 	enemies[1] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
 	1, 1, false);
@@ -127,9 +133,11 @@ void SceneGame::draw(float dt){
 
 void SceneGame::update(float dt){
 
+	///*
 	for (auto spawn : spawner_list){
 		spawn->update();
 	}
+	//*/
 
 	///update the entities inside the current EntityList
 	for (int i = 0; i < getEntitysize(); ++i){
