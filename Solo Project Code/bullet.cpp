@@ -71,3 +71,7 @@ BulletTemplate& BulletTemplate::operator= (const BulletTemplate& source){
 
 	return *this;
 }
+
+BulletTemplate::~BulletTemplate(){
+
+}

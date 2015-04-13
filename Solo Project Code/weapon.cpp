@@ -54,8 +54,6 @@ Weapon::Weapon(const Weapon& source){
 	keyword = source.keyword; 
 	enemydidShoot = source.enemydidShoot;
 
-	//bullet_list = source.bullet_list;
-
 	for (auto bullet : source.bullet_list){
 		bullet_list.push_back(new BulletTemplate(*bullet));
 	}
@@ -165,6 +163,9 @@ void Weapon::shootBullet(Entity& shooter, BulletTemplate& bullet){
 	}
 	else if (Player* player = dynamic_cast<Player*> (&shooter)){
 		enemydidShoot = false;
+	}
+	else {
+		return;
 	}
 
 	Bullet* bullet_p = new Bullet(

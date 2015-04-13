@@ -9,11 +9,13 @@
 #include "weapon.hpp"
 #include "player.hpp"
 #include "collisionGrid.hpp"
-#include "spawner.hpp"
+
 
 // forward declare
 
 class BulletTemplate;
+
+class Spawner;
 
 class SceneGame : public Scene{
 private:
@@ -41,7 +43,6 @@ private:
 
 public:
 	SceneGame(Game* game);
-	//SceneGame() {}; // dummy constructor to get rid of compiler errors
 
 	// Scene functions
 	virtual void draw(float dt);

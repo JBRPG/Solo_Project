@@ -55,3 +55,9 @@ EnemyTemplate::EnemyTemplate(SceneGame* scene, std::string tex, int hp, float _s
 myScene(scene), strTex(tex), health(hp), speed(_speed), invincible(invincible), spawnPos(pos)
 
 {}
+
+
+// There is only game scene so we do not want to delete it
+EnemyTemplate::~EnemyTemplate(){
+	myScene = nullptr;
+}

@@ -81,6 +81,13 @@ public:
 	// assignment operator
 	Weapon& operator=(const Weapon&);
 
+	// destructor
+	~Weapon(){
+		for (BulletTemplate* bullet : bullet_list){
+			delete bullet;
+		}
+	};
+
 	// Functions
 
 	void update(Entity&);

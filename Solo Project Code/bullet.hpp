@@ -9,9 +9,6 @@
 
 #include "sceneGame.hpp"
 
-// forward declaration ??
-//class Player;
-//class Enemy;
 
 class Bullet : public Entity{
 
@@ -95,6 +92,9 @@ public:
 
 	// overloaded assignment operator
 	BulletTemplate& operator=(const BulletTemplate&);
+
+	// destructor
+	~BulletTemplate();
 
 	std::string getTex() { return texString; };
 	int getHP() { return hp; };

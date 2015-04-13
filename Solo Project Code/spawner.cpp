@@ -25,6 +25,14 @@ void Spawner::update(){
 	spawn_enemy();
 }
 
+
+/*
+   Spawn enemy does not behave properly
+
+   The entity gets created, it only shoots one bullet, and gets deleted afterwards
+
+
+*/
 void Spawner::spawn_enemy(){
 	if (spawnGapTime == 0){
 		Enemy* _enemy = new Enemy(enemyData->getScene(),

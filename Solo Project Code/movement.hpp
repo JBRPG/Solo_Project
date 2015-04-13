@@ -128,6 +128,9 @@ public:
 	// overloaded assignment operator
 	Movement& operator= (const Movement&);
 
+	// destructor
+	~Movement();
+
 
 	// functions
 

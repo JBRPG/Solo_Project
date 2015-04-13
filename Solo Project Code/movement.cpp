@@ -19,6 +19,11 @@ Movement::Movement(const Movement& source){
 
 }
 
+// destructor
+Movement::~Movement() {
+
+}
+
 // overloaded assignment operator
 Movement& Movement::operator=(const Movement& source){
 	// check for self assignment

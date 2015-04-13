@@ -1,6 +1,8 @@
 #include "sceneGame.hpp"
 #include "input.hpp"
 
+#include "spawner.hpp"
+
 
 SceneGame::SceneGame(Game* game){
 
@@ -43,7 +45,7 @@ SceneGame::SceneGame(Game* game){
 
 	std::vector<BulletTemplate*> enemy_weapon;
 
-	// 2 shot rapid
+	// 2 shot sequence
 	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, -5));
 	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, 5));
 
