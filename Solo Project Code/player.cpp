@@ -69,28 +69,33 @@ void Player::movePlayer(){
 		velocity.x /= sqrt2;
 		velocity.y /= sqrt2;
 	}
+
+
 	this->move(velocity);
 
 	// keep player from going out of bounds
-	if (this->getGlobalBounds().left < 0){
-		this->setPosition(this->getGlobalBounds().width / 2,
+	sf::Vector2f tl_window_view = myScene->game->window.mapPixelToCoords(
+		sf::Vector2i(0,0));
+	sf::Vector2f br_window_view = myScene->game->window.mapPixelToCoords(
+		sf::Vector2i(myScene->game->window.getSize().x, myScene->game->window.getSize().x));
+
+	if (this->getGlobalBounds().left < tl_window_view.x){
+		this->setPosition(tl_window_view.x + this->getGlobalBounds().width / 2,
 			this->getPosition().y);
 	}
-	if (this->getPosition().x >= myScene->game->window.getSize().x
+	if (this->getPosition().x >= br_window_view.x
 		- this->getGlobalBounds().width/2){
-		std::cout << "Global bound width: " << this->getGlobalBounds().width << std::endl;
-		this->setPosition(myScene->game->window.getSize().x - this->getGlobalBounds().width / 2,
+		this->setPosition(br_window_view.x - this->getGlobalBounds().width / 2,
 			this->getPosition().y);
 	}
-	if (this->getGlobalBounds().top < 0){
+	if (this->getGlobalBounds().top < tl_window_view.y){
 		this->setPosition(this->getPosition().x,
-			this->getGlobalBounds().height / 2);
+			tl_window_view.y + this->getGlobalBounds().height / 2);
 	}
-	if (this->getPosition().y >= myScene->game->window.getSize().y
+	if (this->getPosition().y >= br_window_view.y
 		- this->getGlobalBounds().height / 2){
-		std::cout << "Global bound height: " << this->getGlobalBounds().height << std::endl;
 		this->setPosition(this->getPosition().x,
-			myScene->game->window.getSize().y - this->getGlobalBounds().height / 2);
+			br_window_view.y - this->getGlobalBounds().height / 2);
 	}
 }
 

@@ -40,6 +40,16 @@ private:
 
 	std::vector <Spawner*> spawner_list;
 
+	int scene_ticks;
+
+	// Tried doing the scrolling with the current view all objects are affected by view
+	sf::Vector2f scrollSpeed = sf::Vector2f(1.0f, 0);
+
+	bool withinWindow(Entity&);
+
+	sf::IntRect getWindowBounds(Entity&);
+
+
 
 public:
 	SceneGame(Game* game);
@@ -61,4 +71,6 @@ public:
 	// From scene
 	void addEntity(Entity* entity);
 
+	// other functions
+	sf::Vector2f getScrollSpeed() { return scrollSpeed; };
 };

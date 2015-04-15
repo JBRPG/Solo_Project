@@ -132,17 +132,21 @@ void SceneGame::draw(float dt){
 }
 
 void SceneGame::update(float dt){
-
+	++scene_ticks;
 	///*
 	for (auto spawn : spawner_list){
 		spawn->update();
 	}
 	//*/
 
+	// Tried the scrolling speed but learned it affects the whole view and the coordinates are stuck in
+	// the active view
+
 	///update the entities inside the current EntityList
 	for (int i = 0; i < getEntitysize(); ++i){
 		Entity* idxEntity = getEntity(i);
 		idxEntity->update(dt);
+		//gameView.move(scrollSpeed);
 	}
 
 	// Add the created entities
@@ -212,15 +216,21 @@ void SceneGame::update(float dt){
 
 void SceneGame::populateGrid(){
 
+	/*
+	  I must work on this function since I got to convert the coordinate points from the
+	  the current viewpoint to the render window (aka the render target) coordinate in pixels
+
+	*/
+
 	gridBox.reset();
 
 	// Set up the rectangle to represent the cell.
 	// Default is at top left corner
-	sf::FloatRect cellRect = sf::FloatRect
-		(sf::Vector2f(0,0),sf::Vector2f(
+	sf::IntRect cellRect = sf::IntRect
+		(sf::Vector2i(0,0),sf::Vector2i(
 				game->window.getSize().x/gridBox.slicesX,
 				game->window.getSize().y/gridBox.slicesY));
-	sf::FloatRect windowRect = sf::FloatRect(0, 0,
+	sf::IntRect windowRect = sf::IntRect(0, 0,
 		game->window.getSize().x, game->window.getSize().y);
     // Now we check each entity if they are inside the grid
 
@@ -229,7 +239,7 @@ void SceneGame::populateGrid(){
 		// if entity is outside the game window,
 		// store the entity and continue with the rest of the entities
 
-		if (!getEntity(i)->getGlobalBounds().intersects(windowRect)){
+		if (!withinWindow(*getEntity(i))){
 			storeRemovedEntity(getEntity(i));
 			continue;
 	    }
@@ -242,19 +252,19 @@ void SceneGame::populateGrid(){
 				// Set up the 4 corners for the cell's area
 
 				// had to do float casting for more precise cells
-				cellRect.left = float(game->window.getSize().x) *
+				cellRect.left = (game->window.getSize().x) *
 					            (float(x) / float(gridBox.slicesX));
-				cellRect.top = float(game->window.getSize().y) *
+				cellRect.top = (game->window.getSize().y) *
 					            (float(y) / float(gridBox.slicesY));
-				cellRect.width = float(game->window.getSize().x) *
+				cellRect.width = (game->window.getSize().x) *
 					            (float(x+1) / float(gridBox.slicesX));
-				cellRect.height = float(game->window.getSize().y) *
+				cellRect.height = (game->window.getSize().y) *
 					            (float(y+1) / float(gridBox.slicesY));
 
 
 				// Add the entitiy to the cell if they touch
 
-				if (getEntity(i)->getGlobalBounds().intersects(cellRect)){
+				if (getWindowBounds(*getEntity(i)).intersects(cellRect)){
 					gridBox.append(x, y, getEntity(i));
 				}
 
@@ -264,6 +274,7 @@ void SceneGame::populateGrid(){
 
 
 	}
+	
 }
 
 void SceneGame::checkCollisions(){
@@ -283,8 +294,7 @@ void SceneGame::checkCollisions(){
 					auto q = gridBox.cell[i][j].items[l];
 					if (p == q) continue; // we do not want the same pointer
 
-					if (p->getGlobalBounds().
-						intersects(q->getGlobalBounds() )){
+					if (p->getGlobalBounds().intersects(q->getGlobalBounds())){
 
 						// Do a series of collisions depending on the specific entities
 						p->collideWith(*q);
@@ -308,3 +318,37 @@ void SceneGame::addEntity(Entity* entity){
 	EntityList.push_back(entity);
 }
 
+bool SceneGame::withinWindow(Entity& entity){
+	sf::Vector2i tl_pixels = this->game->window.mapCoordsToPixel(
+		sf::Vector2f(entity.getGlobalBounds().left, entity.getGlobalBounds().top), gameView);
+	sf::Vector2i tr_pixels = this->game->window.mapCoordsToPixel(
+		sf::Vector2f(entity.getGlobalBounds().left + entity.getGlobalBounds().width,
+		entity.getGlobalBounds().top), gameView);
+	sf::Vector2i bl_pixels = this->game->window.mapCoordsToPixel(
+		sf::Vector2f(entity.getGlobalBounds().left,
+		entity.getGlobalBounds().top + entity.getGlobalBounds().height), gameView);
+	sf::Vector2i br_pixels = this->game->window.mapCoordsToPixel(
+		sf::Vector2f(entity.getGlobalBounds().left + entity.getGlobalBounds().width,
+		entity.getGlobalBounds().top + entity.getGlobalBounds().height), gameView);
+
+	sf::IntRect entity_pixels = sf::IntRect(tl_pixels, br_pixels);
+
+	sf::IntRect windowRect = sf::IntRect(0, 0, game->window.getSize().x, game->window.getSize().y);
+
+	return entity_pixels.intersects(windowRect);
+
+
+
+}
+
+sf::IntRect SceneGame::getWindowBounds(Entity& entity){
+	sf::Vector2i entity_pixelTL = game->window.mapCoordsToPixel(
+		sf::Vector2f(entity.getGlobalBounds().left,
+		entity.getGlobalBounds().top));
+	sf::Vector2i entity_pixelBR = game->window.mapCoordsToPixel(
+		sf::Vector2f(entity.getGlobalBounds().left + entity.getGlobalBounds().width ,
+		entity.getGlobalBounds().top + entity.getGlobalBounds().height));
+
+	return sf::IntRect(entity_pixelTL, entity_pixelBR);
+
+}
