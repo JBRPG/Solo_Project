@@ -70,8 +70,13 @@ void Player::movePlayer(){
 		velocity.y /= sqrt2;
 	}
 
+	// When I added the scroll speed to the move function,
+	// I expected that the player ship would look like it stands still
+	// however, the framerate is not constant and often below 60fps,
+	// which causes the scrolling to go faster than the player
 
-	this->move(velocity);
+	this->move(velocity + myScene->getScrollSpeed()); // this for screen scrolling testing
+	//this->move(velocity);
 
 	// keep player from going out of bounds
 	sf::Vector2f tl_window_view = myScene->game->window.mapPixelToCoords(

@@ -34,6 +34,11 @@ private:
 	std::vector <std::vector < BulletTemplate* > > bullet_Patterns;
 
 	// Other important variables
+
+	sf::Font font = sf::Font();
+	sf::Text fpsDisplay = sf::Text("FPS:", font, 30);
+	std::string framerate;
+
 	collisionGrid gridBox;
 	std::vector<Entity*> addList; // We simply add the created entities to EntityList
 	std::vector<Entity*> removeList; // we match the stored entities for removal
