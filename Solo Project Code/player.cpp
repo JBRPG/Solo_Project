@@ -1,5 +1,7 @@
 #include "player.hpp"
 
+#include "pickup.hpp"
+
 
 
 void Player::update(float dt){
@@ -34,6 +36,9 @@ void Player::collideWith(Entity& other){
 		// Take damage from bullet,
 		// unless invincible
 		--this->health;
+	}
+	else if (Pickup* pickup = dynamic_cast<Pickup*> (&other)){
+		this->setWeapon(other.getWeapon());
 	}
 }
 

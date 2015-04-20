@@ -72,6 +72,7 @@ public:
 
 	// Constructors
 
+	Weapon();
 	Weapon(std::vector <BulletTemplate*>, std::string, int, std::vector<int>);
 	Weapon(std::vector <BulletTemplate*>, std::string, int);
 

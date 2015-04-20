@@ -46,7 +46,6 @@ SceneGame::SceneGame(Game* game){
 
 	// simple rapid fire
 
-
 	bullet_Patterns.push_back(player_weapon);
 
 	std::vector<BulletTemplate*> enemy_weapon;
@@ -82,41 +81,18 @@ SceneGame::SceneGame(Game* game){
 
 	// Initialize the entities
 
-	// for now we just add in the player and a few enemies
-	// hardcoded until we make use of the random generator
+	// initalize the powerup for test purpose
+	powup = new Pickup(this,"pickup", sf::Vector2f(400,200) , new Weapon((bullet_Patterns[0]), "single", 60));
+	addEntity(powup);
+
+	// Player will always be initalized at the start of the game
 
 	player = new Player(TextureManager::instance()->getRef("playerSprite"),
 		1, 5, false, 3);
 	player->setPosition(sf::Vector2f(100, 200));
-	player->setWeapon(new Weapon((bullet_Patterns[0]), "single", 60));
+	player->setWeapon(new Weapon());
 
 	addEntity(player);
-
-
-	/*
-	// For a simple test, we will add in a few enemies
-	//enemies.push_back(nullptr);
-	/*enemies[0] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
-	1,1,false);
-	enemies[0]->setPosition(sf::Vector2f(500, 500));
-	enemies[0]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, {8}));
-	enemies[0]->setMovement(enemy_movement);
-
-	addEntity(enemies[0]);
-
-	enemies[0] = new Enemy(this, "enemySprite", 1, 1, false, sf::Vector2f(500, 500),
-		new Weapon(bullet_Patterns[1], "sequence_enemy", 60, { 8 }),
-		enemy_movement);
-	addEntity(enemies[0]);
-	/*
-	enemies.push_back(nullptr);
-	enemies[1] = new Enemy(TextureManager::instance()->getRef("enemySprite"),
-	1, 1, false);
-	enemies[1]->setPosition(sf::Vector2f(400, 350));
-	enemies[1]->setWeapon(new Weapon(bullet_Patterns[1], "sequence_enemy", 60, { 8 }));
-	enemies[1]->setMovement(enemy_movement);
-	addEntity(enemies[1]);
-	//*/
 
 }
 
@@ -212,7 +188,7 @@ void SceneGame::update(float dt){
 	removeList.clear();
 
 
-	gameView.move(scrollSpeed); // The code that gave differetn behavior than expected
+	gameView.move(scrollSpeed);
 
 
 }

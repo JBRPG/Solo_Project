@@ -8,6 +8,7 @@
 #include "movement.hpp"
 #include "weapon.hpp"
 #include "player.hpp"
+#include "pickup.hpp"
 #include "collisionGrid.hpp"
 
 
@@ -26,12 +27,14 @@ private:
 	sf::View  playerView;
 	sf::View  hudView;
 
-	// for temporary purpose, we will have a background sprite
+
 	sf::Sprite background;
 	Player* player;
 	
 	std::vector<Enemy*> enemies; // temporary variable
 	std::vector <std::vector < BulletTemplate* > > bullet_Patterns;
+
+	Pickup* powup; // we will have one pickup for testing purposes
 
 	// Other important variables
 

@@ -8,6 +8,16 @@
 
 
 */
+
+// this is for player only
+Weapon::Weapon():
+keyword("single"), shootCooldownSet(120)
+{
+	std::vector<BulletTemplate*> bullets;
+	bullets.push_back(new BulletTemplate("bulletPlayer",1, 15, false, 0));
+	bullet_list = bullets;
+}
+
 Weapon::Weapon(std::vector <BulletTemplate*> bullets, std::string key_name, int delay, std::vector<int> key_params) :
 bullet_list(bullets), keyword(key_name), shootCooldownSet(delay)
 {

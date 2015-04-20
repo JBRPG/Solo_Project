@@ -89,23 +89,6 @@ public:
 
 	// Other constructors
 
-	/*
-
-	// for enemy creation
-	Entity(SceneGame*, std::string, int, float, bool,
-		sf::Vector2f, Weapon*, Movement*);
-
-	// for player creation
-	Entity(SceneGame*, std::string, int, float, bool,
-		sf::Vector2f, Weapon*);
-
-	// for bullet
-	Entity(SceneGame*, std::string, int, float, bool,
-		sf::Vector2f);
-
-	//*/
-
-
 	//*
 	// for enemy creation
 	Entity(SceneGame* scene, std::string tex, int hp, float speed, bool invincible,
@@ -133,6 +116,15 @@ public:
 		myScene(scene), health(hp), speed(speed), invincible(invincible),
 		Sprite(TextureManager::instance()->getRef(tex))
 	{
+		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
+		this->setPosition(pos);
+	};
+
+	// for pickup
+	Entity(SceneGame* scene, std::string tex, sf::Vector2f pos, Weapon* weapon):
+	health(1), speed(0), invincible(true),
+	myScene(scene), myWeapon(weapon),
+	Sprite(TextureManager::instance()->getRef(tex)){
 		setOrigin(this->getGlobalBounds().width / 2, this->getGlobalBounds().height / 2);
 		this->setPosition(pos);
 	};
@@ -165,7 +157,13 @@ public:
 	void setMovement(Movement* movement) { myMovement = movement; };
 	Movement* getMovement() { return myMovement; };
 
-	void setWeapon(Weapon* weapon) { myWeapon = weapon; };
+	void setWeapon(Weapon* weapon) {
+		if (myWeapon != nullptr){
+			delete myWeapon;
+			myWeapon = nullptr;
+		}
+		myWeapon = weapon;
+	};
 	Weapon* getWeapon(){ return myWeapon; };
 
 
