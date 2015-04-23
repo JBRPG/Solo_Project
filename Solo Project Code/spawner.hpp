@@ -39,6 +39,8 @@ private:
 	Weapon* givenWeapon;
 	Movement* givenMovement;
 
+	// make sure to give the spawner the coordinates for window in pixels
+	sf::Vector2f windowCoords;
 
 
 	int ticks;
@@ -46,10 +48,16 @@ private:
 public:
 
 	Spawner(Weapon*, Movement*, EnemyTemplate*, std::vector <int>);
+	Spawner(Weapon*, Movement*, EnemyTemplate*, std::vector <int>, sf::Vector2f);
+
 
 	void update();
 	void spawn_enemy();
 	void spawn_count();
+
+	void setSpawnLocation(sf::Vector2f);
+
+	sf::Vector2f getWindowCoords();
 
 	~Spawner(){
 		delete givenWeapon;

@@ -338,3 +338,39 @@ sf::IntRect SceneGame::getWindowBounds(Entity& entity){
 		entity.getGlobalBounds().height));
 
 }
+
+// We shall test spanwer creation with fixed variables
+Spawner* SceneGame::makeSpawner(){
+	Spawner* newSpawn;
+
+	std::vector<BulletTemplate*> enemy_weapon;
+
+	// 2 shot sequence
+	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, -5));
+	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, 5));
+
+	// initalize Movement
+
+	std::vector<sf::Vector2f> waypoints = {
+		sf::Vector2f(-100, 0),
+		sf::Vector2f(-100, -100),
+		sf::Vector2f(0, -100),
+	};
+
+	Movement* enemy_movement = new Movement(sf::Vector2f(800, 400), waypoints);
+
+	newSpawn = new Spawner(
+		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
+		new Movement(enemy_movement->getVertex(), waypoints),
+		new EnemyTemplate(this, "enemySprite", 1, 2, false,
+		enemy_movement->getVertex()), {60, 3});
+
+
+	return newSpawn;
+}
+
+Spawner* SceneGame::makeSpawner(Weapon* weapon, Movement* movement, EnemyTemplate* enemy, std::vector<int> params){
+	Spawner* newSpawn = new Spawner(weapon, movement, enemy, params);
+
+	return newSpawn;
+}

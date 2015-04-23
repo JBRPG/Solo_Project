@@ -21,6 +21,26 @@ givenWeapon(weapon), givenMovement(movement), enemyData(enemy)
 
 }
 
+Spawner::Spawner(Weapon* weapon, Movement* movement, EnemyTemplate* enemy, std::vector <int> params,
+	sf::Vector2f window_coords) :
+	givenWeapon(weapon), givenMovement(movement), enemyData(enemy), windowCoords(window_coords)
+{
+
+	// Need one or two parameters or else the program will quit.
+	if (params.size() == 1){
+		spawnGapSet = params[0];
+	}
+	else if (params.size() == 2){
+
+		spawnGapSet = params[0];
+		spawnLimit = params[1];
+	}
+	else {
+		exit(1);
+	}
+
+}
+
 void Spawner::update(){
 	spawn_enemy();
 }
@@ -64,4 +84,13 @@ void Spawner::spawn_count(){
 	else {
 		delete this;
 	}
+}
+
+void Spawner::setSpawnLocation(sf::Vector2f vertex){
+	givenMovement->setEntityVertex(vertex);
+}
+
+
+sf::Vector2f Spawner::getWindowCoords() {
+	return windowCoords;
 }

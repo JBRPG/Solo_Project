@@ -16,6 +16,8 @@
 
 class BulletTemplate;
 
+class EnemyTemplate;
+
 class Spawner;
 
 class SceneGame : public Scene{
@@ -56,6 +58,9 @@ private:
 	bool withinWindow(Entity&);
 
 	sf::IntRect getWindowBounds(Entity&);
+
+	Spawner* makeSpawner();  // for test purposes, we make a default spawner
+	Spawner* makeSpawner(Weapon*, Movement*, EnemyTemplate*, std::vector<int>);
 
 
 
