@@ -6,6 +6,8 @@
 
 #include "spawner.hpp"
 
+#include "pickup.hpp"
+
 
 SceneGame::SceneGame(Game* game){
 
@@ -47,37 +49,6 @@ SceneGame::SceneGame(Game* game){
 	// simple rapid fire
 
 	bullet_Patterns.push_back(player_weapon);
-
-	std::vector<BulletTemplate*> enemy_weapon;
-
-	// 2 shot sequence
-	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, -5));
-	enemy_weapon.push_back(new BulletTemplate("bulletEnemy", 1, 10, false, 5));
-
-	bullet_Patterns.push_back(enemy_weapon);
-
-
-	// initalize Movement
-
-	std::vector<sf::Vector2f> waypoints = {
-		sf::Vector2f(-100, 0),
-		sf::Vector2f(-100, -100),
-		sf::Vector2f(0, -100),
-	};
-
-	Movement* enemy_movement = new Movement(sf::Vector2f(400, 400), waypoints);
-
-	///*
-	std::vector <int> spawnParams = { 60 };
-	// Initalize the spawner
-	spawner_list.push_back(new Spawner(
-		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
-		new Movement(enemy_movement->getVertex(), waypoints),
-		new EnemyTemplate(this, "enemySprite", 1, 2, false,
-		enemy_movement->getVertex()), spawnParams));
-
-	//*/
-
 
 	// Initialize the entities
 
@@ -123,13 +94,13 @@ void SceneGame::update(float dt){
 	framerate = strDisplay.str();
 
 	fpsDisplay.setString(framerate);
+
+	spawnTimer(); 
+
 	for (auto spawn : spawner_list){
 		spawn->update();
 	}
 	//*/
-
-	// Tried the scrolling speed but learned it affects the whole view and the coordinates are stuck in
-	// the active view
 
 	///update the entities inside the current EntityList
 	for (int i = 0; i < getEntitysize(); ++i){
@@ -171,6 +142,7 @@ void SceneGame::update(float dt){
 				if (p == q){
 					// remove entity from entityList
 					delete p;
+					p = nullptr;
 					EntityList.erase(EntityList.begin() + k);
 					
 
@@ -182,7 +154,17 @@ void SceneGame::update(float dt){
 		}
 	}
 
+	for (int i = spawner_list.size() - 1; i >= 0; --i){
+		
+		//*
+		Spawner* spawn = spawner_list[i];
+		if (spawn->getSpawnLimit() == 0){
+			delete spawn;
+			spawner_list.erase(spawner_list.begin() + i);
+		}
 
+		//*/
+	}
 	//empty the containers of added and removed entities 
 	addList.clear();
 	removeList.clear();
@@ -357,13 +339,15 @@ Spawner* SceneGame::makeSpawner(){
 		sf::Vector2f(0, -100),
 	};
 
-	Movement* enemy_movement = new Movement(sf::Vector2f(800, 400), waypoints);
+	sf::Vector2f window_to_map_spawn = game->window.mapPixelToCoords(sf::Vector2i(800, 400), gameView);
+
+	Movement* enemy_movement = new Movement(window_to_map_spawn, waypoints);
 
 	newSpawn = new Spawner(
-		new Weapon(enemy_weapon, "sequence_enemy", 60, { 8 }),
+		new Weapon(enemy_weapon, "sequence_enemy", 36, { 8 }),
 		new Movement(enemy_movement->getVertex(), waypoints),
 		new EnemyTemplate(this, "enemySprite", 1, 2, false,
-		enemy_movement->getVertex()), {60, 3});
+		enemy_movement->getVertex()), {30, 3});
 
 
 	return newSpawn;
@@ -373,4 +357,11 @@ Spawner* SceneGame::makeSpawner(Weapon* weapon, Movement* movement, EnemyTemplat
 	Spawner* newSpawn = new Spawner(weapon, movement, enemy, params);
 
 	return newSpawn;
+}
+
+void SceneGame::spawnTimer(){
+	if (scene_ticks % spawn_time == 0){
+		Spawner* newSpawn =  makeSpawner();
+		spawner_list.push_back(newSpawn);
+	}
 }

@@ -38,7 +38,7 @@ void Player::collideWith(Entity& other){
 		--this->health;
 	}
 	else if (Pickup* pickup = dynamic_cast<Pickup*> (&other)){
-		this->setWeapon(other.getWeapon());
+		this->setWeapon(pickup->giveWeapon());
 	}
 }
 

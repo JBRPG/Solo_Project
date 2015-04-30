@@ -41,4 +41,14 @@ void Entity::update(float dt){
 	++ticks;
 }
 
- 
+Entity::~Entity(){
+	if (myMovement != nullptr){
+		delete myMovement;
+		myMovement = nullptr;
+	}
+
+	if (myWeapon != nullptr){
+		delete myWeapon;
+		myWeapon = nullptr;
+	}
+}

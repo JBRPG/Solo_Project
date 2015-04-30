@@ -55,6 +55,8 @@ public:
 	void spawn_enemy();
 	void spawn_count();
 
+	int getSpawnLimit() { return spawnLimit; };
+
 	void setSpawnLocation(sf::Vector2f);
 
 	sf::Vector2f getWindowCoords();

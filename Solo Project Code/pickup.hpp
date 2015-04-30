@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entity.hpp"
+#include "weapon.hpp"
 
 class Pickup : public Entity{
 private:
@@ -12,6 +13,8 @@ public:
 	};
 
 	void collideWith(Entity&);
+	Weapon* giveWeapon();
+
 
 	// empty functions
 	void updateMovement(Movement&) {};

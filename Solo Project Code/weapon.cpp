@@ -106,12 +106,20 @@ Weapon& Weapon::operator=(const Weapon& source){
 	return *this;
 }
 
-
+Weapon::~Weapon(){
+	for (BulletTemplate* bullet : bullet_list){
+		delete bullet;
+	}
+}
 
 void Weapon::update(Entity& shooter){
 
 	lookupShoot(shooter, this->keyword);
 
+}
+
+Weapon* Weapon::replaceWeapon(Weapon* newWeapon){
+	return new Weapon(*newWeapon);
 }
 
 void Weapon::lookupShoot(Entity& shooter, std::string name){

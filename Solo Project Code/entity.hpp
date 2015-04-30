@@ -129,6 +129,9 @@ public:
 		this->setPosition(pos);
 	};
 
+	// destructor
+	~Entity();
+
 	//*/
 
 	// Member functions

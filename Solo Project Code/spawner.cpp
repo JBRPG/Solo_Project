@@ -54,7 +54,7 @@ void Spawner::update(){
 
 */
 void Spawner::spawn_enemy(){
-	if (spawnGapTime == 0){
+	if (spawnGapTime == 0 && spawnLimit != 0){
 		Enemy* _enemy = new Enemy(enemyData->getScene(),
 			enemyData->getTex(),
 			enemyData->getHP(),
@@ -81,9 +81,6 @@ void Spawner::spawn_enemy(){
 void Spawner::spawn_count(){
 	if (spawnLimit < 0) return;
 	if (spawnLimit > 0) spawnLimit--;
-	else {
-		delete this;
-	}
 }
 
 void Spawner::setSpawnLocation(sf::Vector2f vertex){

@@ -7,3 +7,7 @@ void Pickup::collideWith(Entity& other){
 		myScene->storeRemovedEntity(this);
 	}
 }
+
+Weapon* Pickup::giveWeapon(){
+	return new Weapon(*myWeapon);
+}

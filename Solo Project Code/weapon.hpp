@@ -83,15 +83,13 @@ public:
 	Weapon& operator=(const Weapon&);
 
 	// destructor
-	~Weapon(){
-		for (BulletTemplate* bullet : bullet_list){
-			delete bullet;
-		}
-	};
+	~Weapon();
 
 	// Functions
 
 	void update(Entity&);
+
+	Weapon* replaceWeapon(Weapon*);
 
 	/*
 	   Look up the name of the specified shot type to
@@ -101,10 +99,7 @@ public:
 
 
 	/* The required parameters for the specified functions
-	   
 	   1 - Entity&: Use it to produce bullets and manage cooldown
-
-
 	*/
 	void rapidEnemy(Entity&);
 	void rapidPlayer(Entity&);

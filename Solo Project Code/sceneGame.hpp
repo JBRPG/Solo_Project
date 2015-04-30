@@ -8,7 +8,6 @@
 #include "movement.hpp"
 #include "weapon.hpp"
 #include "player.hpp"
-#include "pickup.hpp"
 #include "collisionGrid.hpp"
 
 
@@ -19,6 +18,8 @@ class BulletTemplate;
 class EnemyTemplate;
 
 class Spawner;
+
+class Pickup;
 
 class SceneGame : public Scene{
 private:
@@ -49,6 +50,8 @@ private:
 	std::vector<Entity*> removeList; // we match the stored entities for removal
 
 	std::vector <Spawner*> spawner_list;
+	
+	int spawn_time = 120; // For now we have it affecting all spawners
 
 	int scene_ticks;
 
@@ -61,6 +64,9 @@ private:
 
 	Spawner* makeSpawner();  // for test purposes, we make a default spawner
 	Spawner* makeSpawner(Weapon*, Movement*, EnemyTemplate*, std::vector<int>);
+
+	// For simple test purpose, we shall create a pre-fixed spawner based on time period
+	void spawnTimer();
 
 
 
@@ -86,4 +92,7 @@ public:
 
 	// other functions
 	sf::Vector2f getScrollSpeed() { return scrollSpeed; };
+
+	int getSpawnTime(){ return spawn_time; };
+	void setSpawnTime(int time){ spawn_time = time; };
 };
